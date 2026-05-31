@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>SERVE &mdash; Tennis Rehab</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#080a0c;--bg2:#0f1215;--bg3:#161b20;--bg4:#1e2530;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --text:#f0f2f5;--sub:#8a9ab0;--muted:#4a5568;
+  --p1:#e63946;--p1d:rgba(230,57,70,0.12);--p1b:rgba(230,57,70,0.28);
+  --p2:#f4a261;--p2d:rgba(244,162,97,0.12);--p2b:rgba(244,162,97,0.28);
+  --p3:#52b788;--p3d:rgba(82,183,136,0.12);--p3b:rgba(82,183,136,0.28);
+  --pd:#4895ef;--pdd:rgba(72,149,239,0.12);--pdb:rgba(72,149,239,0.28);
+  --tab-h:70px;--safe-b:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
+.app-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;padding-bottom:calc(var(--tab-h) + var(--safe-b) + 20px);}
+.app-scroll::-webkit-scrollbar{display:none;}
+.status-bar{height:env(safe-area-inset-top,44px);background:var(--bg);flex-shrink:0;}
+.screen{display:none;animation:fadeUp 0.22s cubic-bezier(0.22,1,0.36,1);}
+.screen.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── HOME ── */
+.home-header{padding:20px 20px 0;display:flex;justify-content:space-between;align-items:flex-start;}
+.home-greeting{font-size:13px;color:var(--sub);font-weight:500;}
+.home-name{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;letter-spacing:-0.01em;line-height:1.05;margin-top:2px;}
+.home-name span{color:var(--p3);}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--p1),var(--p2));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#fff;flex-shrink:0;}
+.hero-ring-wrap{display:flex;flex-direction:column;align-items:center;padding:24px 20px 16px;}
+.ring-label-above{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);margin-bottom:14px;}
+.ring-svg-wrap{position:relative;width:180px;height:180px;}
+.ring-svg{width:180px;height:180px;transform:rotate(-90deg);}
+.ring-track{fill:none;stroke:var(--bg3);stroke-width:11;}
+.ring-fill{fill:none;stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset 1.1s cubic-bezier(0.22,1,0.36,1);}
+.ring-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.ring-week{font-family:'Barlow Condensed',sans-serif;font-size:50px;font-weight:900;line-height:1;}
+.ring-week-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);margin-top:2px;}
+.ring-badge{margin-top:4px;display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 20px 18px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 12px;text-align:center;}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;}
+.stat-lbl{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--sub);margin-top:3px;}
+.sec-head{display:flex;justify-content:space-between;align-items:center;padding:0 20px;margin-bottom:12px;}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:0.02em;text-transform:uppercase;}
+.sec-link{font-size:12px;font-weight:600;color:var(--sub);cursor:pointer;}
+.phase-scroll{display:flex;gap:12px;padding:0 20px 20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;}
+.phase-scroll::-webkit-scrollbar{display:none;}
+.phase-card{flex-shrink:0;width:195px;scroll-snap-align:start;border-radius:18px;padding:20px 18px;cursor:pointer;position:relative;overflow:hidden;transition:transform 0.15s;border:1px solid transparent;}
+.phase-card:active{transform:scale(0.97);}
+.phase-card-num{font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:900;line-height:1;opacity:0.1;position:absolute;right:8px;top:4px;}
+.phase-card-phase{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.7;margin-bottom:6px;}
+.phase-card-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;line-height:1.1;margin-bottom:8px;}
+.phase-card-weeks{font-size:11px;font-weight:500;opacity:0.6;}
+.phase-card-bar{height:3px;border-radius:2px;background:rgba(255,255,255,0.15);margin-top:14px;overflow:hidden;}
+.phase-card-bar-fill{height:100%;border-radius:2px;background:rgba(255,255,255,0.65);}
+.pc1{background:linear-gradient(135deg,#2d0b0e,#4a1018);border-color:var(--p1b);}
+.pc2{background:linear-gradient(135deg,#2d1a08,#4a2c10);border-color:var(--p2b);}
+.pc3{background:linear-gradient(135deg,#0a2e1a,#0f4a28);border-color:var(--p3b);}
+.pcd{background:linear-gradient(135deg,#081a38,#0f2d5c);border-color:var(--pdb);}
+.alert-card{margin:0 20px 18px;background:var(--p1d);border:1px solid var(--p1b);border-radius:14px;padding:14px 16px;display:flex;gap:12px;}
+.alert-icon{font-size:18px;flex-shrink:0;}
+.alert-text{font-size:12px;color:#ffb3b8;line-height:1.65;}
+.alert-text strong{color:var(--p1);display:block;margin-bottom:2px;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;}
+.eq-scroll{display:flex;gap:8px;padding:0 20px 24px;overflow-x:auto;scrollbar-width:none;}
+.eq-scroll::-webkit-scrollbar{display:none;}
+.eq-pill{flex-shrink:0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 13px;font-size:12px;font-weight:600;color:var(--sub);white-space:nowrap;}
+.eq-pill.must{border-color:var(--p2b);color:var(--p2);}
+
+/* ── PHASE SCREEN ── */
+.phase-screen-header{padding:16px 20px 0;display:flex;align-items:center;gap:14px;}
+.back-btn{width:36px;height:36px;border-radius:10px;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;}
+.back-btn:active{background:var(--bg3);}
+.phase-screen-meta{flex:1;}
+.phase-screen-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+.phase-screen-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1.1;}
+.phase-banner{margin:14px 20px;border-radius:18px;padding:22px 20px;position:relative;overflow:hidden;}
+.phase-banner-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.35),rgba(0,0,0,0));}
+.phase-banner-num{font-family:'Barlow Condensed',sans-serif;font-size:110px;font-weight:900;line-height:1;position:absolute;right:-8px;bottom:-18px;opacity:0.08;}
+.phase-banner-content{position:relative;}
+.phase-banner-desc{font-size:13px;line-height:1.65;opacity:0.78;margin-bottom:14px;max-width:280px;}
+.phase-pills-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+.phase-pill-tag{font-size:10px;font-weight:700;letter-spacing:0.05em;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);}
+.block-label{padding:0 20px;margin:18px 0 10px;display:flex;align-items:center;gap:10px;}
+.block-label-text{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);white-space:nowrap;}
+.block-label-line{flex:1;height:1px;background:var(--border);}
+.ex-cards{display:flex;flex-direction:column;gap:10px;padding:0 20px;}
+
+/* ── EXERCISE CARD ── */
+.ex-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.15s;}
+.ex-card.expanded{border-color:var(--border2);}
+.ex-card-top{padding:16px 16px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;cursor:pointer;}
+.ex-card-left{flex:1;}
+.ex-card-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:0.01em;line-height:1.2;margin-bottom:8px;}
+.ex-params-row{display:flex;flex-wrap:wrap;gap:5px;}
+.ex-param{font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;background:var(--bg3);border:1px solid var(--border);color:var(--sub);}
+.ex-param.primary{background:var(--bg4);border-color:var(--border2);color:var(--text);}
+.ex-chevron{color:var(--muted);font-size:18px;transition:transform 0.2s;flex-shrink:0;margin-top:2px;}
+.ex-card.expanded .ex-chevron{transform:rotate(180deg);}
+
+/* ── VIDEO PLAYER ── */
+.ex-video-wrap{display:none;border-top:1px solid var(--border);padding:12px 14px 14px;}
+.ex-card.expanded .ex-video-wrap{display:block;}
+.video-btn{display:flex;align-items:center;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;text-decoration:none;transition:background 0.15s,border-color 0.15s;}
+.video-btn:active{background:var(--bg4);border-color:var(--border2);}
+.video-thumb{width:80px;height:45px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--bg4);}
+.video-btn-info{flex:1;}
+.video-btn-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.video-btn-sub{font-size:11px;color:var(--sub);display:flex;align-items:center;gap:5px;}
+.video-btn-play{width:32px;height:32px;border-radius:50%;background:var(--p1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
+
+/* ── WHY BOX ── */
+.ex-why-wrap{display:none;padding:12px 14px 14px;border-top:1px solid var(--border);}
+.ex-card.expanded .ex-why-wrap{display:block;}
+.ex-why{font-size:12px;color:var(--sub);line-height:1.7;}
+
+/* ── PROG BOX ── */
+.prog-box{margin:20px 20px 4px;background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:18px;}
+.prog-box-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+.prog-box-text{font-size:13px;color:var(--sub);line-height:1.75;}
+.serve-proto{margin:20px;background:var(--p3d);border:1px solid var(--p3b);border-radius:16px;padding:18px;}
+.serve-proto-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--p3);margin-bottom:12px;}
+.serve-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.serve-step{background:rgba(0,0,0,0.2);border-radius:10px;padding:12px;}
+.serve-step-week{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--p3);margin-bottom:4px;}
+.serve-step-detail{font-size:12px;color:var(--sub);line-height:1.5;}
+.tip-box{margin:0 20px 4px;border-radius:14px;padding:14px 16px;font-size:12px;line-height:1.7;}
+.tip-box.amber{background:var(--p2d);border:1px solid var(--p2b);color:#d4884a;}
+.tip-box.amber strong{color:var(--p2);}
+.tip-box.blue{background:var(--pdd);border:1px solid var(--pdb);color:#7ab8f5;}
+
+/* ── OVERVIEW ── */
+.ov-header{padding:20px 20px 16px;}
+.ov-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);margin-bottom:4px;}
+.ov-title{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;letter-spacing:-0.01em;line-height:1.05;}
+.ov-title span{color:var(--p3);}
+.clinical-section{padding:0 20px 4px;}
+.clinical-title{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);margin-bottom:10px;}
+.clinical-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.clinical-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.clinical-site{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.clinical-dx{font-size:12px;font-weight:600;color:var(--text);line-height:1.4;}
+.ov-phases{display:flex;flex-direction:column;gap:10px;padding:0 20px 20px;}
+.ov-phase-row{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;}
+.ov-phase-row:active{background:var(--bg3);}
+.ov-phase-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.ov-phase-info{flex:1;}
+.ov-phase-tag{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;}
+.ov-phase-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;}
+.ov-phase-weeks{font-size:11px;color:var(--sub);}
+.ov-phase-arrow{color:var(--muted);font-size:18px;}
+.eq-section{padding:0 20px 20px;}
+.eq-cats{display:flex;flex-direction:column;gap:8px;}
+.eq-cat-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;}
+.eq-cat-title{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--sub);margin-bottom:10px;}
+.eq-items{display:flex;flex-direction:column;gap:6px;}
+.eq-item{font-size:13px;color:var(--sub);padding:6px 0;border-bottom:1px solid var(--border);line-height:1.4;}
+.eq-item:last-child{border-bottom:none;padding-bottom:0;}
+.eq-item strong{color:var(--text);font-weight:600;}
+.eq-item.priority strong{color:var(--p2);}
+
+/* ── TAB BAR ── */
+.tab-bar{flex-shrink:0;height:calc(var(--tab-h) + var(--safe-b));background:rgba(8,10,12,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:10px;padding-bottom:var(--safe-b);}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 4px;}
+.tab-item:active{opacity:0.7;}
+.tab-icon{font-size:22px;line-height:1;}
+.tab-label{font-size:10px;font-weight:700;letter-spacing:0.04em;color:var(--muted);}
+.tab-item.active .tab-label{color:var(--text);}
+.p1c{color:var(--p1)!important;}.p2c{color:var(--p2)!important;}.p3c{color:var(--p3)!important;}.pdc{color:var(--pd)!important;}
+.spacer{height:8px;}
+</style>
+</head>
+<body>
+<div class="status-bar"></div>
+<div class="app-scroll" id="appScroll">
+
+<!-- ══ HOME ══ -->
+<div class="screen active" id="screen-home">
+  <div class="home-header">
+    <div>
+      <div class="home-greeting">Good session,</div>
+      <div class="home-name">Sebastien <span>S.</span></div>
+    </div>
+    <div class="avatar">SS</div>
+  </div>
+  <div class="hero-ring-wrap">
+    <div class="ring-label-above">16-week program progress</div>
+    <div class="ring-svg-wrap">
+      <svg class="ring-svg" viewBox="0 0 180 180">
+        <circle class="ring-track" cx="90" cy="90" r="76"/>
+        <circle class="ring-fill" id="ringFill" cx="90" cy="90" r="76" stroke="url(#rg)" stroke-dasharray="477.52" stroke-dashoffset="477.52"/>
+        <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#e63946"/><stop offset="50%" stop-color="#f4a261"/><stop offset="100%" stop-color="#52b788"/></linearGradient></defs>
+      </svg>
+      <div class="ring-center">
+        <div class="ring-week p1c">1</div>
+        <div class="ring-week-label">of 16 weeks</div>
+        <div class="ring-badge" style="background:var(--p1d);border:1px solid var(--p1b);color:var(--p1)">Phase 1</div>
+      </div>
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-val p1c">6&#8211;7</div><div class="stat-lbl">Pain /10</div></div>
+    <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Sessions/wk</div></div>
+    <div class="stat-card"><div class="stat-val p2c">30</div><div class="stat-lbl">Min/session</div></div>
+  </div>
+  <div class="alert-card">
+    <div class="alert-icon">&#9888;&#65039;</div>
+    <div class="alert-text"><strong>Medical clearance required</strong>Show this to your osteopath before starting Phase 1. Do not serve competitively during Phase 1.</div>
+  </div>
+  <div class="sec-head"><div class="sec-title">Your Phases</div><div class="sec-link" onclick="showTab('overview')">See all &#8594;</div></div>
+  <div class="phase-scroll">
+    <div class="phase-card pc1" onclick="openPhase('p1')"><div class="phase-card-num">01</div><div class="phase-card-phase p1c">Phase 1</div><div class="phase-card-name">Unload &amp;<br>Restore</div><div class="phase-card-weeks">Weeks 1&#8211;4 &middot; 3&#215;/week</div><div class="phase-card-bar"><div class="phase-card-bar-fill" style="width:0%"></div></div></div>
+    <div class="phase-card pc2" onclick="openPhase('p2')"><div class="phase-card-num">02</div><div class="phase-card-phase p2c">Phase 2</div><div class="phase-card-name">Build &amp;<br>Stabilise</div><div class="phase-card-weeks">Weeks 5&#8211;10 &middot; 3&#8211;4&#215;/week</div><div class="phase-card-bar"><div class="phase-card-bar-fill" style="width:0%"></div></div></div>
+    <div class="phase-card pc3" onclick="openPhase('p3')"><div class="phase-card-num">03</div><div class="phase-card-phase p3c">Phase 3</div><div class="phase-card-name">Load &amp;<br>Perform</div><div class="phase-card-weeks">Weeks 11&#8211;16 &middot; 4&#215;/week</div><div class="phase-card-bar"><div class="phase-card-bar-fill" style="width:0%"></div></div></div>
+    <div class="phase-card pcd" onclick="openPhase('pd')"><div class="phase-card-num">&#8734;</div><div class="phase-card-phase pdc">Daily</div><div class="phase-card-name">Maintenance<br>Routine</div><div class="phase-card-weeks">All phases &middot; 10 min</div><div class="phase-card-bar"><div class="phase-card-bar-fill" style="width:100%"></div></div></div>
+  </div>
+  <div class="sec-head"><div class="sec-title">Equipment</div></div>
+  <div class="eq-scroll">
+    <div class="eq-pill must">&#128308; FlexBar Green ~&#8364;20</div>
+    <div class="eq-pill must">&#128308; Resistance bands</div>
+    <div class="eq-pill">Pull-up bar</div>
+    <div class="eq-pill">Dumbbells</div>
+    <div class="eq-pill">Med ball 2&#8211;3kg</div>
+    <div class="eq-pill">Cable machine</div>
+    <div class="eq-pill">Incline bench</div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PHASE 1 -->
+<div class="screen" id="screen-p1">
+  <div class="phase-screen-header">
+    <div class="back-btn" onclick="backToHome()">&#8592;</div>
+    <div class="phase-screen-meta">
+      <div class="phase-screen-tag" style="color:var(--p1)">Phase 1 &middot; Weeks 1&#8211;4</div>
+      <div class="phase-screen-title">Unload &amp; Restore</div>
+    </div>
+  </div>
+  <div class="phase-banner" style="background:linear-gradient(135deg,#1a0408,#2d0b10)">
+    <div class="phase-banner-bg"></div>
+    <div class="phase-banner-num">01</div>
+    <div class="phase-banner-content">
+      <div class="phase-banner-desc">Remove tissue irritation. Isometric tendon loading. Restore mobility through the back&#8211;shoulder&#8211;elbow chain. No overhead loading. No serving.</div>
+      <div class="phase-pills-wrap"><span class="phase-pill-tag">3&#215;/week</span><span class="phase-pill-tag">20&#8211;30 min</span><span class="phase-pill-tag">Pain &#8804; 3/10</span><span class="phase-pill-tag">No serve</span></div>
+    </div>
+  </div>
+  <div class="tip-box amber"><strong>FlexBar Tyler Twist (daily from day 1)</strong> &#8212; 3 &#215; 15 eccentric wrist extensions. Most evidence-backed intervention for lateral epicondylitis. Green TheraBand FlexBar ~&#8364;20.</div>
+<div class="block-label"><span class="block-label-text">Warm-Up &middot; 8 min</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Band Dislocations</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 10</span><span class="ex-param">Slow &amp; controlled</span><span class="ex-param">No pain</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/3eDkCWyVF6o" target="_blank" onclick="openYT(event,'https://youtu.be/3eDkCWyVF6o')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/3eDkCWyVF6o/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Full shoulder arc warm-up. Primes the RC through complete range before any load. Wide grip to avoid pain through mid-range.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Band Pull Aparts</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 15</span><span class="ex-param">Light band</span><span class="ex-param">Scap retraction at end</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/oBNHEXcMGYg" target="_blank" onclick="openYT(event,'https://youtu.be/oBNHEXcMGYg')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/oBNHEXcMGYg/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Rhomboids, rear delt, mid-trap activation. Counteracts the anterior dominance that builds from daily serving and groundstrokes.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Wall Slides</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 10</span><span class="ex-param">Forearms on wall</span><span class="ex-param">Slide slowly</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/GHMwMPCkc5I" target="_blank" onclick="openYT(event,'https://youtu.be/GHMwMPCkc5I')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/GHMwMPCkc5I/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Serratus anterior activation &#8212; keeps scapula flush against ribcage during overhead movement. Critical for impingement prevention.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Block A &middot; Rotator Cuff</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Band External Rotation</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 15</span><span class="ex-param">2s hold end range</span><span class="ex-param">60s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/l9XHXBM3QRM" target="_blank" onclick="openYT(event,'https://youtu.be/l9XHXBM3QRM')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/l9XHXBM3QRM/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Elbow pinned to side. Strengthens infraspinatus and teres minor &#8212; the primary serve decelerators. IR/ER imbalance is the root of your front shoulder pain.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">External Rotation Holds</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 5</span><span class="ex-param">8s isometric hold</span><span class="ex-param">75s rest</span><span class="ex-param">90&#176; abduction</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/s3HXSGt3W4o" target="_blank" onclick="openYT(event,'https://youtu.be/s3HXSGt3W4o')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/s3HXSGt3W4o/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Isometrics = maximum neural drive, zero tendon compression. The safest entry for 6&#8211;7/10 pain.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Prone Blackburns</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12</span><span class="ex-param">3s up &middot; 2s down</span><span class="ex-param">60s rest</span><span class="ex-param">No weight</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/5Q2p7R3WiHU" target="_blank" onclick="openYT(event,'https://youtu.be/5Q2p7R3WiHU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/5Q2p7R3WiHU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Posterior RC + lower trap. Prone position offloads the spine while training the chain compromised by your back contracture.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Prone ITYs</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 10</span><span class="ex-param">2s hold at top</span><span class="ex-param">60s rest</span><span class="ex-param">Bodyweight</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/VB_DnB8WC0Y" target="_blank" onclick="openYT(event,'https://youtu.be/VB_DnB8WC0Y')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/VB_DnB8WC0Y/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Three positions loading the full scapular force couple. Y position trains the serve follow-through arm path.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Block B &middot; Elbow Tendon</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Hammer Curls &#8212; Eccentric</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 10</span><span class="ex-param">2s up &middot; 4s down</span><span class="ex-param">90s rest</span><span class="ex-param">Very light DB</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/TwD-YGVP4Bk" target="_blank" onclick="openYT(event,'https://youtu.be/TwD-YGVP4Bk')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/TwD-YGVP4Bk/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">4-second eccentric targets brachioradialis &#8212; key lateral elbow stabiliser. The slow lowering is the therapy, not the lift.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Inverted Curls</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12</span><span class="ex-param">2s up &middot; 3s down</span><span class="ex-param">90s rest</span><span class="ex-param">Light weight</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/JhaCRPOHwFc" target="_blank" onclick="openYT(event,'https://youtu.be/JhaCRPOHwFc')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/JhaCRPOHwFc/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Pronated grip loads the ECRB tendon &#8212; the lateral epicondylitis site. Wrist extensors work isometrically throughout every rep.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Dead Hangs</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 20&#8211;30s</span><span class="ex-param">Passive hang</span><span class="ex-param">60s rest</span><span class="ex-param">Both hands</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/HoE-C85ZlCE" target="_blank" onclick="openYT(event,'https://youtu.be/HoE-C85ZlCE')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/HoE-C85ZlCE/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Decompresses elbow, isometrically loads flexor tendons, elongates shoulder complex. Also directly benefits your back contracture.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Block C &middot; Mobility</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Bench Lat Mobility</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 45s each</span><span class="ex-param">Breathe out to deepen</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/3ZVDN0mREA4" target="_blank" onclick="openYT(event,'https://youtu.be/3ZVDN0mREA4')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/3ZVDN0mREA4/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Priority 1 for back contracture. Opens thoracic + lat simultaneously. Most important stretch in the program.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Pec Minor Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 40s each</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/X7MfHGNp2L0" target="_blank" onclick="openYT(event,'https://youtu.be/X7MfHGNp2L0')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/X7MfHGNp2L0/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Tight pec minor &#8594; anterior scapular tipping &#8594; impingement. Non-negotiable with front shoulder pain at this severity.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Sleeper IR/ER Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 40s each direction</span><span class="ex-param">Gentle only</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/hz3aR1qFjcU" target="_blank" onclick="openYT(event,'https://youtu.be/hz3aR1qFjcU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/hz3aR1qFjcU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Posterior capsule tightness is the primary driver of back-of-shoulder pain (GIRD). Very gentle pressure &#8212; never force this stretch.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Band Lat Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 40s each</span><span class="ex-param">Rotate torso for QL bias</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/7Ep9nXWkfZU" target="_blank" onclick="openYT(event,'https://youtu.be/7Ep9nXWkfZU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/7Ep9nXWkfZU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Directly targets back contracture. Lat runs humerus to pelvis &#8212; tightness restricts both shoulder mobility and back posture.</div></div>
+    </div></div>
+  <div class="prog-box"><div class="prog-box-label p1c">Phase 1 &#8594; Phase 2 criteria</div><div class="prog-box-text">Resting pain &#8804; 2/10 &middot; all sets pain-free at tempo &middot; osteopath clearance. <strong style="color:var(--text)">Minimum 4 weeks</strong> regardless of improvement rate.</div></div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PHASE 2 -->
+<div class="screen" id="screen-p2">
+  <div class="phase-screen-header">
+    <div class="back-btn" onclick="backToHome()">&#8592;</div>
+    <div class="phase-screen-meta">
+      <div class="phase-screen-tag" style="color:var(--p2)">Phase 2 &middot; Weeks 5&#8211;10</div>
+      <div class="phase-screen-title">Build &amp; Stabilise</div>
+    </div>
+  </div>
+  <div class="phase-banner" style="background:linear-gradient(135deg,#1a0d04,#2d1a08)">
+    <div class="phase-banner-bg"></div>
+    <div class="phase-banner-num">02</div>
+    <div class="phase-banner-content">
+      <div class="phase-banner-desc">Rebuild scapular stability and the 2:1 pull-to-push ratio. Progress elbow loading to eccentric-isotonic. Light rallying permitted &#8212; no flat serves.</div>
+      <div class="phase-pills-wrap"><span class="phase-pill-tag">3&#8211;4&#215;/week</span><span class="phase-pill-tag">35&#8211;45 min</span><span class="phase-pill-tag">Pain &#8804; 2/10</span><span class="phase-pill-tag">Light rally OK</span></div>
+    </div>
+  </div>
+<div class="block-label"><span class="block-label-text">Block A &middot; Scapular Stability</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Wall Slides with Lift Off</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 10</span><span class="ex-param">3s lift hold</span><span class="ex-param">75s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/GHMwMPCkc5I" target="_blank" onclick="openYT(event,'https://youtu.be/GHMwMPCkc5I')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/GHMwMPCkc5I/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Lift-off aggressively recruits serratus anterior &#8212; keeps the scapula flat against the ribcage during overhead serving.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Facepull to External Rotation</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 12</span><span class="ex-param">2s pause at ER</span><span class="ex-param">75s rest</span><span class="ex-param">Cable or band</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/rep-UmSlZTU" target="_blank" onclick="openYT(event,'https://youtu.be/rep-UmSlZTU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/rep-UmSlZTU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Most complete shoulder health exercise for tennis players. Mid-trap + rear delt + RC in one movement.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">ITYWs</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 10 each</span><span class="ex-param">Light plates</span><span class="ex-param">75s rest</span><span class="ex-param">Prone incline bench</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/VB_DnB8WC0Y" target="_blank" onclick="openYT(event,'https://youtu.be/VB_DnB8WC0Y')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/VB_DnB8WC0Y/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Loads all four scapular force couples. W position trains the trophy pose arm position &#8212; corrects your serve mechanics fault.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Incline Rear Delt Raise + ER</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12</span><span class="ex-param">2s up &middot; 3s down</span><span class="ex-param">75s rest</span><span class="ex-param">Light DBs</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/7SGCeL54rN0" target="_blank" onclick="openYT(event,'https://youtu.be/7SGCeL54rN0')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/7SGCeL54rN0/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Posterior deltoid + ER at end range. Trains the serve arm deceleration position under load. Targets back-of-shoulder pain site.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Block B &middot; Pulling Strength</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Inverted Row</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 10</span><span class="ex-param">3s eccentric</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/LK3SqYiABCk" target="_blank" onclick="openYT(event,'https://youtu.be/LK3SqYiABCk')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/LK3SqYiABCk/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Horizontal pull counteracting anterior dominance from every forehand and serve. Adjust foot position to increase difficulty.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Single Arm Cable Row</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12 each</span><span class="ex-param">2s pull &middot; 3s return</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/GZbfZ033f74" target="_blank" onclick="openYT(event,'https://youtu.be/GZbfZ033f74')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/GZbfZ033f74/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Exposes and corrects left-right imbalances common in tennis players. Builds anti-rotation core stability.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Incline Row</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12</span><span class="ex-param">Controlled tempo</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/xQNrFHEMhI4" target="_blank" onclick="openYT(event,'https://youtu.be/xQNrFHEMhI4')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/xQNrFHEMhI4/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Chest-supported removes spinal load &#8212; critical given your active back contracture. Full upper back focus without compensation.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Block C &middot; Elbow Loading</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Zottman Curls</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 10</span><span class="ex-param">2s up supinated</span><span class="ex-param">4s down pronated</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/ZrFZKgSf56Y" target="_blank" onclick="openYT(event,'https://youtu.be/ZrFZKgSf56Y')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/ZrFZKgSf56Y/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Eccentrically loads both flexor (medial) and extensor (lateral) tendons simultaneously. Most efficient bilateral elbow rehab exercise.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">EZ Bar Reverse Curls</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12</span><span class="ex-param">3s eccentric</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/nwMkjUSuHqQ" target="_blank" onclick="openYT(event,'https://youtu.be/nwMkjUSuHqQ')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/nwMkjUSuHqQ/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Progressive ECRB + brachioradialis loading. EZ bar reduces wrist deviation vs straight bar. Primary lateral elbow builder.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Hex Holds</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 30s each</span><span class="ex-param">Pinch grip</span><span class="ex-param">60s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/3YZ3RXR4_tU" target="_blank" onclick="openYT(event,'https://youtu.be/3YZ3RXR4_tU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/3YZ3RXR4_tU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Grip endurance protecting forearm tendons across a full match. Pinch grip mimics racket handle demand under fatigue.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Reverse Throws (band)</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12 each</span><span class="ex-param">Explosive decel</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/1ApfJKkRHuo" target="_blank" onclick="openYT(event,'https://youtu.be/1ApfJKkRHuo')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/1ApfJKkRHuo/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Trains the serve deceleration arc &#8212; follow-through back to trophy. Prepares elbow and shoulder for competitive serve load.</div></div>
+    </div></div>
+  <div class="prog-box"><div class="prog-box-label p2c">Phase 2 &#8594; Phase 3 criteria</div><div class="prog-box-text">Pain at rest 0/10 &middot; pain during rallying &#8804; 1/10 &middot; all Phase 2 exercises at full load &middot; osteopath confirms back contracture improving. <strong style="color:var(--text)">Minimum 6 weeks.</strong></div></div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="screen" id="screen-p3">
+  <div class="phase-screen-header">
+    <div class="back-btn" onclick="backToHome()">&#8592;</div>
+    <div class="phase-screen-meta">
+      <div class="phase-screen-tag" style="color:var(--p3)">Phase 3 &middot; Weeks 11&#8211;16</div>
+      <div class="phase-screen-title">Load &amp; Perform</div>
+    </div>
+  </div>
+  <div class="phase-banner" style="background:linear-gradient(135deg,#041a0e,#082d18)">
+    <div class="phase-banner-bg"></div>
+    <div class="phase-banner-num">03</div>
+    <div class="phase-banner-content">
+      <div class="phase-banner-desc">Maximum shoulder performance loading. Graduated return to full serve volume. All exercises at performance intensity. Pain must be 0/10 throughout.</div>
+      <div class="phase-pills-wrap"><span class="phase-pill-tag">4&#215;/week</span><span class="phase-pill-tag">45&#8211;55 min</span><span class="phase-pill-tag">Pain 0/10</span><span class="phase-pill-tag">Return to serve</span></div>
+    </div>
+  </div>
+<div class="block-label"><span class="block-label-text">Block A &middot; Shoulder Performance</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Scarecrows</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 12</span><span class="ex-param">2s at ER end range</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/v4TRXGLEeAE" target="_blank" onclick="openYT(event,'https://youtu.be/v4TRXGLEeAE')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/v4TRXGLEeAE/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">ER at 90&#176; abduction &#8212; the exact position your elbow needs in the trophy pose. Directly corrects the elbow-too-high serve mechanics fault.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Cuban Press</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 10</span><span class="ex-param">Full arc &middot; controlled</span><span class="ex-param">90s rest</span><span class="ex-param">Light-moderate DBs</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/3ooMvb_xwRM" target="_blank" onclick="openYT(event,'https://youtu.be/3ooMvb_xwRM')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/3ooMvb_xwRM/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Most complete overhead RC movement &#8212; upright row + ER + overhead press in sequence. Trains the full serve wind-up arc under load.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Lateral Raise</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 15</span><span class="ex-param">2s up &middot; 3s down</span><span class="ex-param">90s rest</span><span class="ex-param">Thumb neutral</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/3VcKaXpzqRo" target="_blank" onclick="openYT(event,'https://youtu.be/3VcKaXpzqRo')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/3VcKaXpzqRo/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Supraspinatus + deltoid through 0&#8211;90&#176;. Thumb neutral reduces impingement risk. Increase load weekly as pain allows.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">ITYs (loaded)</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 10 each</span><span class="ex-param">Small plates</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/VB_DnB8WC0Y" target="_blank" onclick="openYT(event,'https://youtu.be/VB_DnB8WC0Y')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/VB_DnB8WC0Y/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Progression from Phase 1 bodyweight ITYs. Loaded for maximal lower trap and serratus strength. Critical for pain-free overhead at full load.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Block B &middot; Pulling Performance</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">KB Corkscrew Row</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 10 each</span><span class="ex-param">Rotational finish</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/ZFJMd3PpVL0" target="_blank" onclick="openYT(event,'https://youtu.be/ZFJMd3PpVL0')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/ZFJMd3PpVL0/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Rotation mimics forehand follow-through &#8212; builds sport-specific pulling power and protects the elbow from repetitive unidirectional stress.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Rotational Low Cable Row</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 12 each</span><span class="ex-param">Full rotation</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/Gj0wgc8OFws" target="_blank" onclick="openYT(event,'https://youtu.be/Gj0wgc8OFws')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/Gj0wgc8OFws/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Tennis-specific kinetic chain. Low cable + rotation trains the forehand pull-through and lower body integration of the serve.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Single Arm Landmine Row</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 10 each</span><span class="ex-param">Heavy &middot; full retraction</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/KBnNzJFMT74" target="_blank" onclick="openYT(event,'https://youtu.be/KBnNzJFMT74')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/KBnNzJFMT74/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Heaviest horizontal pull. Lat strength is foundational for serve power &#8212; the lat is the primary internal rotator driving racket acceleration.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Block C &middot; Elbow Durability</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Incline Hammer Curls</div>
+          <div class="ex-params-row"><span class="ex-param primary">4 &#215; 10</span><span class="ex-param">3s eccentric</span><span class="ex-param">90s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/TwD-YGVP4Bk" target="_blank" onclick="openYT(event,'https://youtu.be/TwD-YGVP4Bk')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/TwD-YGVP4Bk/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Incline increases brachialis stretch at the bottom &#8212; loading at long muscle length is the most adaptive stimulus for tendon remodelling.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Hex Carries</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 30m each</span><span class="ex-param">Pinch grip</span><span class="ex-param">60s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/3YZ3RXR4_tU" target="_blank" onclick="openYT(event,'https://youtu.be/3YZ3RXR4_tU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/3YZ3RXR4_tU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Forearm endurance under cumulative fatigue &#8212; simulates the sustained grip demand of a 3-set match.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Dead Hangs (loaded)</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 45s</span><span class="ex-param">Weighted vest option</span><span class="ex-param">60s rest</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/HoE-C85ZlCE" target="_blank" onclick="openYT(event,'https://youtu.be/HoE-C85ZlCE')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/HoE-C85ZlCE/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Now a durability tool. Trains grip, forearm, and elbow under sustained tension while benefiting the thoracic chain and back contracture.</div></div>
+    </div></div>
+  <div class="serve-proto">
+    <div class="serve-proto-label">&#8617; Return-to-Serve Protocol (Week 11)</div>
+    <div style="font-size:12px;color:var(--sub);margin-bottom:12px;line-height:1.6;">Stop if pain exceeds 1/10. Return to Phase 2 mobility for 48h before retrying.</div>
+    <div class="serve-grid">
+      <div class="serve-step"><div class="serve-step-week">Week 11</div><div class="serve-step-detail">20 serves &middot; 60% &middot; 2&#215;/week</div></div>
+      <div class="serve-step"><div class="serve-step-week">Week 12</div><div class="serve-step-detail">30 serves &middot; 70% &middot; 3&#215;/week</div></div>
+      <div class="serve-step"><div class="serve-step-week">Week 13</div><div class="serve-step-detail">40 serves &middot; 80% &middot; 3&#215;/week</div></div>
+      <div class="serve-step"><div class="serve-step-week">Week 14+</div><div class="serve-step-detail">Full load &middot; monitor weekly</div></div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- DAILY -->
+<div class="screen" id="screen-pd">
+  <div class="phase-screen-header">
+    <div class="back-btn" onclick="backToHome()">&#8592;</div>
+    <div class="phase-screen-meta">
+      <div class="phase-screen-tag" style="color:var(--pd)">Daily &middot; All Phases</div>
+      <div class="phase-screen-title">Maintenance</div>
+    </div>
+  </div>
+  <div class="phase-banner" style="background:linear-gradient(135deg,#040e1a,#081a30)">
+    <div class="phase-banner-bg"></div>
+    <div class="phase-banner-num">&#8734;</div>
+    <div class="phase-banner-content">
+      <div class="phase-banner-desc">10 minutes every morning + post-tennis sequence. Run through all three phases. This is where the back contracture gets addressed every single day.</div>
+      <div class="phase-pills-wrap"><span class="phase-pill-tag">Every day</span><span class="phase-pill-tag">10 min morning</span><span class="phase-pill-tag">15 min post-tennis</span></div>
+    </div>
+  </div>
+<div class="block-label"><span class="block-label-text">Morning &middot; before getting up</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Band Pull Aparts</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 20</span><span class="ex-param">Light band</span><span class="ex-param">Every day</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/oBNHEXcMGYg" target="_blank" onclick="openYT(event,'https://youtu.be/oBNHEXcMGYg')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/oBNHEXcMGYg/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">2-minute daily ritual. Activates the posterior chain before the day loads the anterior chain through sitting, studying, and playing.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Cactus Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 40s</span><span class="ex-param">Thoracic extension</span><span class="ex-param">Every day</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/6E45pIWDRxs" target="_blank" onclick="openYT(event,'https://youtu.be/6E45pIWDRxs')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/6E45pIWDRxs/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Opens pec + thoracic spine. Counteracts flexion posture from sleeping and studying. Directly relevant to your back contracture recovery.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Lat Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 45s each</span><span class="ex-param">Even on rest days</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/7Ep9nXWkfZU" target="_blank" onclick="openYT(event,'https://youtu.be/7Ep9nXWkfZU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/7Ep9nXWkfZU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Most important stretch for back contracture. Lat runs humerus to pelvis &#8212; tightness restricts both shoulder mobility and back posture.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Diagonal Band Pull Aparts</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 15 each direction</span><span class="ex-param">Pre-tennis essential</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/oBNHEXcMGYg" target="_blank" onclick="openYT(event,'https://youtu.be/oBNHEXcMGYg')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/oBNHEXcMGYg/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Mirrors serve deceleration arc &#8212; primes the posterior shoulder before you hit a single ball. Do before every practice session.</div></div>
+    </div></div>
+<div class="block-label"><span class="block-label-text">Post-Tennis &middot; within 30 min</span><span class="block-label-line"></span></div>
+  <div class="ex-cards">
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Overhead Band Lat Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">3 &#215; 45s each</span><span class="ex-param">After serving</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/7Ep9nXWkfZU" target="_blank" onclick="openYT(event,'https://youtu.be/7Ep9nXWkfZU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/7Ep9nXWkfZU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Decompresses lat tension from internal rotation during serve acceleration. Do immediately after every session involving serving.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Sleeper Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 40s each</span><span class="ex-param">Post-match essential</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/hz3aR1qFjcU" target="_blank" onclick="openYT(event,'https://youtu.be/hz3aR1qFjcU')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/hz3aR1qFjcU/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Reduces posterior capsule tightening from repetitive serve load. Prevents cumulative GIRD building over a competition season.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Bicep Stretch</div>
+          <div class="ex-params-row"><span class="ex-param primary">2 &#215; 40s each arm</span><span class="ex-param">Post-match</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+        <div class="ex-video-wrap">
+          <a class="video-btn" href="https://youtu.be/9FbPPxZTAQg" target="_blank" onclick="openYT(event,'https://youtu.be/9FbPPxZTAQg')">
+            <img class="video-thumb" src="https://img.youtube.com/vi/9FbPPxZTAQg/mqdefault.jpg" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="video-btn-info">
+              <div class="video-btn-title">Watch Exercise Demo</div>
+              <div class="video-btn-sub">&#9654; Opens in YouTube app</div>
+            </div>
+            <div class="video-btn-play">&#9654;</div>
+          </a>
+        </div><div class="ex-why-wrap"><div class="ex-why">Releases distal bicep tendon compressed against the radial head during serve pronation. Relevant to front shoulder and medial elbow symptoms.</div></div>
+    </div>
+    <div class="ex-card" onclick="toggleCard(this)">
+      <div class="ex-card-top">
+        <div class="ex-card-left">
+          <div class="ex-card-name">Heat Application</div>
+          <div class="ex-params-row"><span class="ex-param primary">15&#8211;20 min</span><span class="ex-param">Not ice</span><span class="ex-param">Shoulder + upper back</span></div>
+        </div>
+        <div class="ex-chevron">&#8964;</div>
+      </div>
+      
+      <div class="ex-why-wrap"><div class="ex-why">Given your back contracture, heat is preferred. Promotes tissue extensibility in chronically tight structures. Apply after stretching.</div></div>
+    </div></div>
+  <div class="tip-box blue" style="margin-top:20px;">Consistency compounds. 10 minutes every morning for 16 weeks creates structural change in thoracic mobility and posterior shoulder health that no single workout can replicate.</div>
+  <div class="spacer"></div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="screen" id="screen-overview">
+  <div class="ov-header">
+    <div class="ov-eyebrow">Program Overview</div>
+    <div class="ov-title">Shoulder &amp;<br><span>Elbow</span> Rehab</div>
+  </div>
+  <div class="alert-card">
+    <div class="alert-icon">&#9888;&#65039;</div>
+    <div class="alert-text"><strong>Medical clearance required</strong>Show to your osteopath before starting. 6&#8211;7/10 pain over 6+ months requires assessment to rule out structural issues (labral, UCL).</div>
+  </div>
+  <div class="clinical-section">
+    <div class="clinical-title">Clinical Picture</div>
+    <div class="clinical-grid">
+      <div class="clinical-card"><div class="clinical-site">Front shoulder</div><div class="clinical-dx">Biceps tendon / impingement</div></div>
+      <div class="clinical-card"><div class="clinical-site">Back shoulder</div><div class="clinical-dx">Posterior RC / GIRD</div></div>
+      <div class="clinical-card"><div class="clinical-site">Outer elbow</div><div class="clinical-dx">Lateral epicondylitis</div></div>
+      <div class="clinical-card"><div class="clinical-site">Inner elbow</div><div class="clinical-dx">Medial overload / flexor-pronator</div></div>
+      <div class="clinical-card"><div class="clinical-site">Root cause</div><div class="clinical-dx">Back contracture &#8594; shoulder &#8594; elbow</div></div>
+      <div class="clinical-card"><div class="clinical-site">Technique</div><div class="clinical-dx">Elbow too high in trophy &#8594; valgus</div></div>
+    </div>
+  </div>
+  <div class="sec-head"><div class="sec-title">All Phases</div></div>
+  <div class="ov-phases">
+    <div class="ov-phase-row" onclick="openPhase('p1')"><div class="ov-phase-dot" style="background:var(--p1)"></div><div class="ov-phase-info"><div class="ov-phase-tag p1c">Phase 1</div><div class="ov-phase-name">Unload &amp; Restore</div><div class="ov-phase-weeks">Weeks 1&#8211;4 &middot; 3&#215;/week &middot; 20&#8211;30 min</div></div><div class="ov-phase-arrow">&#8250;</div></div>
+    <div class="ov-phase-row" onclick="openPhase('p2')"><div class="ov-phase-dot" style="background:var(--p2)"></div><div class="ov-phase-info"><div class="ov-phase-tag p2c">Phase 2</div><div class="ov-phase-name">Build &amp; Stabilise</div><div class="ov-phase-weeks">Weeks 5&#8211;10 &middot; 3&#8211;4&#215;/week &middot; 35&#8211;45 min</div></div><div class="ov-phase-arrow">&#8250;</div></div>
+    <div class="ov-phase-row" onclick="openPhase('p3')"><div class="ov-phase-dot" style="background:var(--p3)"></div><div class="ov-phase-info"><div class="ov-phase-tag p3c">Phase 3</div><div class="ov-phase-name">Load &amp; Perform</div><div class="ov-phase-weeks">Weeks 11&#8211;16 &middot; 4&#215;/week &middot; 45&#8211;55 min</div></div><div class="ov-phase-arrow">&#8250;</div></div>
+    <div class="ov-phase-row" onclick="openPhase('pd')"><div class="ov-phase-dot" style="background:var(--pd)"></div><div class="ov-phase-info"><div class="ov-phase-tag pdc">Daily</div><div class="ov-phase-name">Maintenance Routine</div><div class="ov-phase-weeks">All phases &middot; 10 min morning + post-tennis</div></div><div class="ov-phase-arrow">&#8250;</div></div>
+  </div>
+  <div class="eq-section">
+    <div class="sec-head" style="padding:0;margin-bottom:12px;"><div class="sec-title">Equipment</div></div>
+    <div class="eq-cats">
+      <div class="eq-cat-card"><div class="eq-cat-title">&#128308; Buy now &#8212; essential</div><div class="eq-items"><div class="eq-item priority"><strong>TheraBand FlexBar (green)</strong> &#8212; ~&#8364;20. Tyler Twist for lateral epicondylitis.</div><div class="eq-item priority"><strong>Resistance bands</strong> &#8212; light + medium set, 3&#8211;4 bands.</div><div class="eq-item"><strong>Doorframe pull-up bar</strong> &#8212; for dead hangs.</div></div></div>
+      <div class="eq-cat-card"><div class="eq-cat-title">Home gym</div><div class="eq-items"><div class="eq-item"><strong>Dumbbells</strong> &#8212; range from very light to moderate.</div><div class="eq-item"><strong>Medicine ball</strong> &#8212; 2&#8211;3 kg for Phase 3 drills.</div><div class="eq-item"><strong>EZ bar + plates</strong> &#8212; for reverse curls.</div></div></div>
+      <div class="eq-cat-card"><div class="eq-cat-title">Gym covers</div><div class="eq-items"><div class="eq-item">Cable machine &middot; incline bench &middot; hex dumbbells</div></div></div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+</div><!-- end app-scroll -->
+
+<nav class="tab-bar">
+  <div class="tab-item active" data-tab="home" onclick="showTab('home')"><div class="tab-icon">&#127968;</div><div class="tab-label">Home</div></div>
+  <div class="tab-item" data-tab="phases" onclick="showTab('phases')"><div class="tab-icon">&#128203;</div><div class="tab-label">Phases</div></div>
+  <div class="tab-item" data-tab="daily" onclick="showTab('daily')"><div class="tab-icon">&#127749;</div><div class="tab-label">Daily</div></div>
+  <div class="tab-item" data-tab="overview" onclick="showTab('overview')"><div class="tab-icon">&#128202;</div><div class="tab-label">Overview</div></div>
+</nav>
+
+<script>
+// ── Ring animation
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const c=2*Math.PI*76;
+    document.getElementById('ringFill').style.strokeDashoffset=c*(1-1/16);
+  },400);
+});
+
+// ── Navigation
+function showTab(tab){
+  document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));
+  document.querySelector('[data-tab="'+tab+'"]').classList.add('active');
+  if(tab==='home') showScreen('home');
+  else if(tab==='phases') showScreen('p1');
+  else if(tab==='daily') showScreen('pd');
+  else if(tab==='overview') showScreen('overview');
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  document.getElementById('appScroll').scrollTo({top:0,behavior:'instant'});
+}
+function openPhase(id){
+  showScreen(id);
+  document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));
+  document.querySelector('[data-tab="phases"]').classList.add('active');
+}
+function backToHome(){
+  showScreen('home');
+  document.querySelectorAll('.tab-item').forEach(e=>e.classList.remove('active'));
+  document.querySelector('[data-tab="home"]').classList.add('active');
+}
+
+// ── Exercise card expand/collapse
+function toggleCard(card){
+  const allCards = card.parentElement.querySelectorAll('.ex-card');
+  allCards.forEach(c => { if(c !== card) c.classList.remove('expanded'); });
+  card.classList.toggle('expanded');
+  if(card.classList.contains('expanded')){
+    setTimeout(()=>{ card.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 50);
+  }
+}
+
+// ── Video opener: tries YouTube app first, falls back to web
+function openYT(e, url){
+  e.preventDefault();
+  e.stopPropagation();
+  // Try to open YouTube app via deep link
+  const appUrl = url.replace('https://youtu.be/', 'youtube://');
+  const start = Date.now();
+  const timer = setTimeout(()=>{
+    if(Date.now() - start < 1500){
+      window.open(url, '_blank');
+    }
+  }, 800);
+  window.location.href = appUrl;
+}
+</script>
+</body>
+</html>
