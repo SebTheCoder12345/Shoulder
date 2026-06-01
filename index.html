@@ -5,117 +5,88 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>SERVE — Rehab</title>
+<title>Serve Hard</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
-  --navy:#08112a;
-  --navy2:#0d1a38;
-  --navy3:#132244;
-  --navy4:#1a2d57;
-  --glow:rgba(99,160,255,0.08);
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.13);
-  --text:#f0f4ff;
-  --sub:#7e96c8;
-  --muted:#3d5280;
-  --accent:#63a0ff;
-  --accent-dim:rgba(99,160,255,0.15);
-  --c1:#ff6b6b; --c1d:rgba(255,107,107,0.12); --c1b:rgba(255,107,107,0.25);
-  --c2:#ffb347; --c2d:rgba(255,179,71,0.12);  --c2b:rgba(255,179,71,0.25);
-  --c3:#56e0a0; --c3d:rgba(86,224,160,0.12);  --c3b:rgba(86,224,160,0.25);
-  --cd:#63a0ff;  --cdd:rgba(99,160,255,0.12);  --cdb:rgba(99,160,255,0.25);
+  --navy:#08112a;--navy2:#0d1a38;--navy3:#132244;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --text:#f0f4ff;--sub:#7e96c8;--muted:#3d5280;--accent:#63a0ff;
+  --c1:#ff6b6b;--c1d:rgba(255,107,107,0.10);--c1b:rgba(255,107,107,0.28);
+  --c2:#ffb347;--c2d:rgba(255,179,71,0.10);--c2b:rgba(255,179,71,0.28);
+  --c3:#56e0a0;--c3d:rgba(86,224,160,0.10);--c3b:rgba(86,224,160,0.28);
+  --cd:#63a0ff;--cdd:rgba(99,160,255,0.10);--cdb:rgba(99,160,255,0.28);
   --safe-t:env(safe-area-inset-top,44px);
   --safe-b:env(safe-area-inset-bottom,0px);
-  --nav-h:52px;
 }
 html,body{height:100%;overflow:hidden;background:var(--navy);}
-body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);font-size:15px;line-height:1.5;
-     display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
-
-/* ── STATUS ── */
+body{font-family:"Plus Jakarta Sans",sans-serif;color:var(--text);font-size:15px;
+     line-height:1.5;display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
 .safe-top{height:var(--safe-t);background:var(--navy);flex-shrink:0;}
 
-/* ── TOP BAR ── */
-.topbar{height:var(--nav-h);background:rgba(8,17,42,0.92);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 20px;
+/* TOP BAR */
+.topbar{height:52px;background:rgba(8,17,42,0.96);backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 18px;
   justify-content:space-between;flex-shrink:0;}
-.tb-back{display:none;align-items:center;gap:6px;cursor:pointer;
-  font-size:13px;font-weight:600;color:var(--sub);letter-spacing:0.02em;}
-.tb-back svg{width:16px;height:16px;stroke:var(--sub);}
-.tb-back.show{display:flex;}
-.tb-logo{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;
-  letter-spacing:0.12em;color:var(--accent);}
+.tb-back{display:none;align-items:center;gap:5px;
+  font-size:13px;font-weight:600;color:var(--sub);
+  border:none;background:none;padding:6px 0;cursor:pointer;}
+.tb-back svg{width:16px;height:16px;stroke:var(--sub);fill:none;stroke-width:2;}
+.tb-logo{font-family:"JetBrains Mono",monospace;font-size:13px;
+  font-weight:500;letter-spacing:0.14em;color:var(--accent);}
 .tb-name{font-size:12px;color:var(--muted);font-weight:500;}
 
-/* ── SWIPE ENGINE ── */
+/* SWIPE */
 .swipe-root{flex:1;overflow:hidden;position:relative;}
-.swipe-track{display:flex;height:100%;will-change:transform;
-  transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);}
-.page{flex-shrink:0;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;background:var(--navy);}
+.swipe-track{display:flex;height:100%;
+  transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
+.page{flex-shrink:0;width:100%;height:100%;
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:var(--navy);}
 .page::-webkit-scrollbar{display:none;}
 
-/* ── BOTTOM NAV ── */
+/* BOTTOM NAV */
 .bottom-nav{flex-shrink:0;display:flex;
-  background:rgba(8,17,42,0.98);backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-  border-top:1px solid var(--border2);
+  background:rgba(8,17,42,0.98);backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border2);
   padding:10px 4px calc(10px + var(--safe-b));}
-.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;
-  gap:5px;cursor:pointer;padding:4px 2px;}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;
+  gap:5px;cursor:pointer;padding:4px 2px;border:none;background:none;}
 .bn-pip{width:22px;height:3px;border-radius:99px;background:transparent;
   transition:background 0.2s,width 0.2s;}
-.bn-label{font-size:11px;font-weight:600;letter-spacing:0.02em;
-  text-transform:uppercase;color:rgba(126,150,200,0.6);transition:color 0.2s;}
-.bn-item.active .bn-pip{background:var(--accent);width:32px;}
-.bn-item.active .bn-label{color:var(--text);}
-.bn-item:active{opacity:0.7;}
+.bn-lbl{font-size:11px;font-weight:600;letter-spacing:0.02em;
+  text-transform:uppercase;color:rgba(126,150,200,0.70);transition:color 0.2s;}
+.bn.active .bn-pip{background:var(--accent);width:32px;}
+.bn.active .bn-lbl{color:var(--text);}
+.bn:active{opacity:0.65;}
 
-/* ════════ HOME ════════ */
-.home-header{padding:28px 20px 24px;
+/* HOME */
+.home-hero{padding:26px 20px 22px;
   background:linear-gradient(160deg,var(--navy2) 0%,var(--navy) 100%);}
-.hh-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;
-  font-weight:500;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:10px;}
-.hh-title{font-size:30px;font-weight:800;line-height:1.1;
-  color:var(--text);margin-bottom:6px;}
+.hh-tag{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.hh-title{font-size:29px;font-weight:800;line-height:1.1;color:var(--text);margin-bottom:6px;}
 .hh-title span{color:var(--accent);}
-.hh-sub{font-size:13px;color:var(--sub);font-weight:400;}
-
-
-
-/* stat strip */
-.stat-strip{display:flex;gap:10px;padding:12px 16px 0;}
+.hh-sub{font-size:13px;color:var(--sub);}
+.stat-strip{display:flex;gap:10px;padding:14px 16px 0;}
 .stat-pill{flex:1;background:var(--navy2);border:1px solid var(--border);
   border-radius:16px;padding:12px 10px;text-align:center;}
 .sp-val{font-size:22px;font-weight:800;line-height:1;color:var(--text);}
 .sp-lbl{font-size:9px;font-weight:700;letter-spacing:0.06em;
   text-transform:uppercase;color:var(--muted);margin-top:4px;}
-
-/* alert */
-.alert-pill{margin:12px 16px 0;background:rgba(255,107,107,0.08);
-  border:1px solid var(--c1b);border-radius:20px;
-  padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
-.ap-icon{width:6px;border-radius:99px;background:var(--c1);flex-shrink:0;align-self:stretch;}
-.ap-body{}
-.ap-title{font-size:10px;font-weight:800;letter-spacing:0.06em;
+.alert-row{margin:14px 16px 0;background:rgba(255,107,107,0.08);
+  border:1px solid var(--c1b);border-radius:18px;padding:14px 16px;display:flex;gap:12px;}
+.ar-bar{width:3px;border-radius:99px;background:var(--c1);flex-shrink:0;align-self:stretch;}
+.ar-title{font-size:10px;font-weight:800;letter-spacing:0.06em;
   text-transform:uppercase;color:var(--c1);margin-bottom:3px;}
-.ap-text{font-size:12px;color:rgba(255,107,107,0.75);line-height:1.65;}
-
-/* section label */
+.ar-text{font-size:12px;color:rgba(255,107,107,0.75);line-height:1.65;}
 .sec-lbl{font-size:10px;font-weight:800;letter-spacing:0.1em;
   text-transform:uppercase;color:var(--muted);padding:20px 20px 10px;}
-
-/* phase rows */
 .phase-rows{display:flex;flex-direction:column;gap:8px;padding:0 16px;}
-.phase-row{background:var(--navy2);border:1px solid var(--border);
-  border-radius:20px;padding:16px 18px;
-  display:flex;align-items:center;gap:14px;cursor:pointer;
-  transition:background 0.15s,border-color 0.15s;}
+.phase-row{background:var(--navy2);border:1px solid var(--border);border-radius:20px;
+  padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  width:100%;text-align:left;}
 .phase-row:active{background:var(--navy3);}
 .pr-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .pr-body{flex:1;}
@@ -123,11 +94,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);font-size:15px
   text-transform:uppercase;margin-bottom:3px;}
 .pr-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:2px;}
 .pr-meta{font-size:11px;color:var(--sub);}
-.pr-arr{font-size:18px;color:var(--muted);}
-
-/* equipment */
-.eq-wrap{padding:0 16px 24px;display:flex;flex-direction:column;gap:8px;}
-.eq-pill-card{background:var(--navy2);border:1px solid var(--border);
+.pr-arr{font-size:20px;color:var(--muted);}
+.eq-wrap{padding:0 16px 16px;display:flex;flex-direction:column;gap:8px;}
+.eq-card{background:var(--navy2);border:1px solid var(--border);
   border-radius:18px;padding:14px 16px;}
 .eq-cat{font-size:9px;font-weight:800;letter-spacing:0.1em;
   text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
@@ -136,726 +105,301 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);font-size:15px
 .eq-row:last-child{border:none;padding-bottom:0;}
 .eq-row strong{color:var(--text);font-weight:600;}
 .eq-row.hot strong{color:var(--c2);}
+.ota-credit{margin:0 16px 24px;background:var(--navy2);border:1px solid var(--border);
+  border-radius:18px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.ota-tag{font-size:9px;font-weight:800;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.ota-name{font-size:14px;font-weight:700;color:var(--text);}
+.ota-url{font-size:11px;color:var(--sub);margin-top:2px;}
+.ota-btn{display:flex;align-items:center;background:var(--navy3);
+  border:1px solid var(--border2);border-radius:99px;padding:8px 14px;
+  text-decoration:none;font-size:12px;font-weight:700;color:var(--accent);}
 
-/* ════════ PHASE PAGES ════════ */
-.ph-header{padding:22px 20px 18px;
-  border-bottom:1px solid var(--border);}
-.ph-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;
-  font-weight:500;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
-.ph-title{font-size:28px;font-weight:800;line-height:1.1;
-  color:var(--text);margin-bottom:10px;}
+/* PHASE PAGES */
+.ph-header{padding:22px 20px 18px;border-bottom:1px solid var(--border);}
+.ph-eyebrow{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+.ph-title{font-size:28px;font-weight:800;line-height:1.1;color:var(--text);margin-bottom:10px;}
 .ph-pills{display:flex;flex-wrap:wrap;gap:6px;}
 .ph-pill{font-size:11px;font-weight:600;padding:5px 12px;border-radius:99px;
   background:var(--navy3);border:1px solid var(--border2);color:var(--sub);}
-
-.ph-body{padding:14px 16px 32px;display:flex;flex-direction:column;gap:14px;}
-
-/* block */
-.blk-head{display:flex;align-items:center;gap:10px;padding:4px 0 2px;}
+.ph-body{padding:14px 16px 40px;display:flex;flex-direction:column;gap:12px;}
+.tip{border-radius:18px;padding:14px 16px;font-size:12px;line-height:1.7;}
+.tip-amber{background:var(--c2d);border:1px solid var(--c2b);color:rgba(255,179,71,0.85);}
+.tip-amber strong{color:var(--c2);}
+.tip-blue{background:var(--cdd);border:1px solid var(--cdb);color:rgba(99,160,255,0.85);}
+.blk{display:flex;flex-direction:column;gap:0;}
+.blk-head{display:flex;align-items:center;gap:10px;padding:6px 0 10px;}
 .blk-lbl{font-size:9px;font-weight:800;letter-spacing:0.12em;
   text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 .blk-line{flex:1;height:1px;background:var(--border);}
 
-/* ── exercise card ── */
-.ex{border-radius:24px;overflow:hidden;cursor:pointer;
+/* EXERCISE CARD */
+.ex{border-radius:22px;cursor:pointer;
   border:1px solid var(--border);margin-bottom:8px;
-  transition:border-color 0.2s;}
+  -webkit-tap-highlight-color:transparent;transition:border-color 0.15s;
+  overflow:hidden;}
+.ex-top{border-radius:22px 22px 0 0;}
 .ex.open{border-color:var(--border2);}
-.ex-top{display:flex;align-items:flex-start;
-  justify-content:space-between;gap:10px;padding:18px 18px 14px;}
+.ex-top{display:flex;align-items:flex-start;justify-content:space-between;
+  gap:10px;padding:16px 16px 13px;user-select:none;-webkit-user-select:none;
+  touch-action:manipulation;}
 .ex-left{flex:1;}
-.ex-name{font-size:18px;font-weight:800;line-height:1.2;
-  color:var(--text);margin-bottom:10px;}
+.ex-name{font-size:17px;font-weight:800;line-height:1.2;color:var(--text);margin-bottom:9px;}
 .ex-tags{display:flex;flex-wrap:wrap;gap:5px;}
-.ex-tag{font-size:10px;font-weight:700;padding:4px 10px;
-  border-radius:99px;border:1px solid;}
-.ex-tag.main{color:#fff;}
+.ex-tag{font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;}
 .ex-chev{font-size:18px;color:var(--muted);transition:transform 0.22s;
-  flex-shrink:0;margin-top:2px;}
+  flex-shrink:0;margin-top:1px;line-height:1;}
 .ex.open .ex-chev{transform:rotate(180deg);}
-.ex-expand{display:none;border-top:1px solid var(--border);}
-.ex.open .ex-expand{display:block;}
-.ex-why{padding:14px 18px;font-size:13px;color:var(--sub);line-height:1.75;}
+.ex-body{display:none;border-top:1px solid var(--border);}
+.ex.open .ex-body{display:block;}
+.ex-why{padding:13px 16px 12px;font-size:13px;line-height:1.75;}
 .ex-link{display:flex;align-items:center;justify-content:space-between;
-  padding:11px 18px;border-top:1px solid var(--border);
+  padding:11px 16px;border-top:1px solid var(--border);
   text-decoration:none;cursor:pointer;}
-.el-label{font-size:11px;font-weight:700;letter-spacing:0.03em;}
-.el-arr{font-size:13px;}
+.ex-link:active{opacity:0.7;}
+.el-txt{font-size:11px;font-weight:700;letter-spacing:0.02em;}
+.el-arr{font-size:15px;font-weight:600;}
 
-/* phase colour themes */
+/* PHASE COLOUR THEMES */
 .p1 .ex{background:rgba(255,107,107,0.05);}
-.p1 .ex-tag.main{background:var(--c1);border-color:var(--c1);}
 .p1 .ex-tag{color:var(--c1);border-color:var(--c1b);background:var(--c1d);}
-.p1 .ex-tag.main{color:#fff;background:var(--c1);}
-.p1 .ex-expand{border-top-color:var(--c1b);}
-.p1 .ex-link{border-top-color:var(--c1b);background:var(--c1d);}
-.p1 .el-label,.p1 .el-arr{color:var(--c1);}
-.p1 .ex-why{color:rgba(255,107,107,0.65);}
-
+.p1 .ex-tag.main{color:#1a0000;background:var(--c1);border-color:var(--c1);}
+.p1 .ex-body{border-top-color:var(--c1b);}
+.p1 .ex-why{color:rgba(255,107,107,0.75);}
+.p1 .ex-link{border-top-color:var(--c1b);background:rgba(255,107,107,0.07);}
+.p1 .el-txt,.p1 .el-arr{color:var(--c1);}
 .p2 .ex{background:rgba(255,179,71,0.05);}
 .p2 .ex-tag{color:var(--c2);border-color:var(--c2b);background:var(--c2d);}
 .p2 .ex-tag.main{color:#1a0e00;background:var(--c2);border-color:var(--c2);}
-.p2 .ex-expand{border-top-color:var(--c2b);}
-.p2 .ex-link{border-top-color:var(--c2b);background:var(--c2d);}
-.p2 .el-label,.p2 .el-arr{color:var(--c2);}
-.p2 .ex-why{color:rgba(255,179,71,0.7);}
-
+.p2 .ex-body{border-top-color:var(--c2b);}
+.p2 .ex-why{color:rgba(255,179,71,0.8);}
+.p2 .ex-link{border-top-color:var(--c2b);background:rgba(255,179,71,0.07);}
+.p2 .el-txt,.p2 .el-arr{color:var(--c2);}
 .p3 .ex{background:rgba(86,224,160,0.05);}
 .p3 .ex-tag{color:var(--c3);border-color:var(--c3b);background:var(--c3d);}
 .p3 .ex-tag.main{color:#00200e;background:var(--c3);border-color:var(--c3);}
-.p3 .ex-expand{border-top-color:var(--c3b);}
-.p3 .ex-link{border-top-color:var(--c3b);background:var(--c3d);}
-.p3 .el-label,.p3 .el-arr{color:var(--c3);}
-.p3 .ex-why{color:rgba(86,224,160,0.7);}
-
+.p3 .ex-body{border-top-color:var(--c3b);}
+.p3 .ex-why{color:rgba(86,224,160,0.8);}
+.p3 .ex-link{border-top-color:var(--c3b);background:rgba(86,224,160,0.07);}
+.p3 .el-txt,.p3 .el-arr{color:var(--c3);}
 .pd .ex{background:rgba(99,160,255,0.05);}
 .pd .ex-tag{color:var(--cd);border-color:var(--cdb);background:var(--cdd);}
 .pd .ex-tag.main{color:#001230;background:var(--cd);border-color:var(--cd);}
-.pd .ex-expand{border-top-color:var(--cdb);}
-.pd .ex-link{border-top-color:var(--cdb);background:var(--cdd);}
-.pd .el-label,.pd .el-arr{color:var(--cd);}
-.pd .ex-why{color:rgba(99,160,255,0.7);}
+.pd .ex-body{border-top-color:var(--cdb);}
+.pd .ex-why{color:rgba(99,160,255,0.8);}
+.pd .ex-link{border-top-color:var(--cdb);background:rgba(99,160,255,0.07);}
+.pd .el-txt,.pd .el-arr{color:var(--cd);}
 
-/* prog / serve boxes */
-.prog-box{background:var(--navy2);border:1px solid var(--border2);
-  border-radius:22px;padding:18px 20px;margin-top:2px;}
+/* PROG & SERVE */
+.prog-box{background:var(--navy2);border:1px solid var(--border2);border-radius:20px;padding:18px;}
 .pb-label{font-size:9px;font-weight:800;letter-spacing:0.1em;
   text-transform:uppercase;margin-bottom:8px;}
 .pb-text{font-size:13px;color:var(--sub);line-height:1.8;}
-
-.serve-box{border-radius:22px;padding:18px 20px;margin-top:2px;
-  background:var(--c3d);border:1px solid var(--c3b);}
+.serve-box{border-radius:20px;padding:18px;background:var(--c3d);border:1px solid var(--c3b);}
 .sb-label{font-size:9px;font-weight:800;letter-spacing:0.1em;
   text-transform:uppercase;color:var(--c3);margin-bottom:10px;}
-.sb-note{font-size:12px;color:rgba(86,224,160,0.7);margin-bottom:12px;line-height:1.6;}
+.sb-note{font-size:12px;color:rgba(86,224,160,0.75);margin-bottom:12px;line-height:1.6;}
 .serve-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.sg-cell{background:rgba(86,224,160,0.08);border-radius:14px;padding:10px 12px;}
+.sg-cell{background:rgba(86,224,160,0.08);border-radius:12px;padding:10px 12px;}
 .sg-wk{font-size:9px;font-weight:800;letter-spacing:0.08em;
   text-transform:uppercase;color:var(--c3);margin-bottom:3px;}
-.sg-d{font-size:12px;color:rgba(86,224,160,0.75);line-height:1.5;}
-
-.tip{border-radius:18px;padding:14px 16px;font-size:12px;
-  line-height:1.7;margin-bottom:2px;}
-.tip-amber{background:var(--c2d);border:1px solid var(--c2b);
-  color:rgba(255,179,71,0.8);}
-.tip-amber strong{color:var(--c2);}
-.tip-blue{background:var(--cdd);border:1px solid var(--cdb);
-  color:rgba(99,160,255,0.8);}
-
-
-
-.spacer{height:24px;}
+.sg-d{font-size:12px;color:rgba(86,224,160,0.8);line-height:1.5;}
 </style>
 </head>
 <body>
+
 <div class="safe-top"></div>
 
-<!-- TOPBAR -->
 <header class="topbar">
-  <div class="tb-back" id="tbBack" onclick="goHome()">
-    <svg viewBox="0 0 16 16" fill="none" stroke-width="2"><polyline points="10,3 5,8 10,13"/></svg>
-    Back
-  </div>
+  <button class="tb-back" id="tbBack" onclick="go(0)" style="display:none;">
+    <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>Back
+  </button>
   <div class="tb-logo" id="tbLogo">SERVE HARD</div>
   <div class="tb-name">Sebastien</div>
 </header>
 
-<!-- SWIPE -->
 <div class="swipe-root" id="SR">
 <div class="swipe-track" id="ST">
 
-<!-- PAGE 0 HOME -->
+<!-- ═══ PAGE 0: HOME ═══ -->
 <div class="page" id="pg0">
-  <div class="home-header">
-    <div class="hh-eyebrow">Tennis Rehab &middot; 16 weeks</div>
-    <div class="hh-title">Shoulder &amp;<br><span>Elbow</span> Rehab</div>
-    <div class="hh-sub">Progressive rehabilitation program &mdash; Sebastien S.</div>
+  <div class="home-hero">
+    <div class="hh-tag">Tennis Rehab &middot; 16 weeks</div>
+    <div class="hh-title">Shoulder &amp; <span>Elbow</span> Rehab</div>
+    <div class="hh-sub">Progressive rehabilitation &mdash; Sebastien S.</div>
   </div>
   <div class="stat-strip">
-    <div class="stat-pill"><div class="sp-val" style="color:var(--c1)">6–7</div><div class="sp-lbl">Pain /10</div></div>
+    <div class="stat-pill"><div class="sp-val" style="color:var(--c1)">6&ndash;7</div><div class="sp-lbl">Pain /10</div></div>
     <div class="stat-pill"><div class="sp-val">16</div><div class="sp-lbl">Weeks</div></div>
-    <div class="stat-pill"><div class="sp-val">42</div><div class="sp-lbl">Exercises</div></div>
-    <div class="stat-pill"><div class="sp-val" style="color:var(--c3)">3</div><div class="sp-lbl">Phases</div></div>
+    <div class="stat-pill"><div class="sp-val">4</div><div class="sp-lbl">Phases</div></div>
+    <div class="stat-pill"><div class="sp-val" style="color:var(--c3)">42</div><div class="sp-lbl">Exercises</div></div>
   </div>
-  <div class="alert-pill">
-    <div class="ap-icon"></div>
-    <div class="ap-body">
-      <div class="ap-title">Medical clearance required</div>
-      <div class="ap-text">Show this program to your osteopath before starting Phase 1. Do not serve competitively during Phase 1.</div>
-    </div>
+  <div class="alert-row">
+    <div class="ar-bar"></div>
+    <div><div class="ar-title">Medical clearance required</div><div class="ar-text">Show this program to your osteopath before starting Phase 1. Do not serve competitively during Phase 1.</div></div>
   </div>
-  <div class="sec-lbl">Program phases</div>
+  <div class="sec-lbl">Your program</div>
   <div class="phase-rows">
-    <div class="phase-row" onclick="go(1)">
+    <button class="phase-row" onclick="go(1)">
       <div class="pr-dot" style="background:var(--c1)"></div>
-      <div class="pr-body">
-        <div class="pr-tag" style="color:var(--c1)">Phase 1</div>
-        <div class="pr-name">Unload &amp; Restore</div>
-        <div class="pr-meta">Weeks 1&ndash;4 &middot; 3 sessions/wk &middot; 20&ndash;30 min</div>
-      </div>
+      <div class="pr-body"><div class="pr-tag" style="color:var(--c1)">Phase 1</div><div class="pr-name">Unload &amp; Restore</div><div class="pr-meta">Weeks 1&ndash;4 &middot; 3 sessions/wk &middot; 20&ndash;30 min</div></div>
       <div class="pr-arr">&rsaquo;</div>
-    </div>
-    <div class="phase-row" onclick="go(2)">
+    </button>
+    <button class="phase-row" onclick="go(2)">
       <div class="pr-dot" style="background:var(--c2)"></div>
-      <div class="pr-body">
-        <div class="pr-tag" style="color:var(--c2)">Phase 2</div>
-        <div class="pr-name">Build &amp; Stabilise</div>
-        <div class="pr-meta">Weeks 5&ndash;10 &middot; 3&ndash;4 sessions/wk &middot; 35&ndash;45 min</div>
-      </div>
+      <div class="pr-body"><div class="pr-tag" style="color:var(--c2)">Phase 2</div><div class="pr-name">Build &amp; Stabilise</div><div class="pr-meta">Weeks 5&ndash;10 &middot; 3&ndash;4 sessions/wk &middot; 35&ndash;45 min</div></div>
       <div class="pr-arr">&rsaquo;</div>
-    </div>
-    <div class="phase-row" onclick="go(3)">
+    </button>
+    <button class="phase-row" onclick="go(3)">
       <div class="pr-dot" style="background:var(--c3)"></div>
-      <div class="pr-body">
-        <div class="pr-tag" style="color:var(--c3)">Phase 3</div>
-        <div class="pr-name">Load &amp; Perform</div>
-        <div class="pr-meta">Weeks 11&ndash;16 &middot; 4 sessions/wk &middot; 45&ndash;55 min</div>
-      </div>
+      <div class="pr-body"><div class="pr-tag" style="color:var(--c3)">Phase 3</div><div class="pr-name">Load &amp; Perform</div><div class="pr-meta">Weeks 11&ndash;16 &middot; 4 sessions/wk &middot; 45&ndash;55 min</div></div>
       <div class="pr-arr">&rsaquo;</div>
-    </div>
-    <div class="phase-row" onclick="go(4)">
+    </button>
+    <button class="phase-row" onclick="go(4)">
       <div class="pr-dot" style="background:var(--cd)"></div>
-      <div class="pr-body">
-        <div class="pr-tag" style="color:var(--cd)">Daily</div>
-        <div class="pr-name">Maintenance Routine</div>
-        <div class="pr-meta">All phases &middot; 10 min morning + post-tennis</div>
-      </div>
+      <div class="pr-body"><div class="pr-tag" style="color:var(--cd)">Daily</div><div class="pr-name">Maintenance Routine</div><div class="pr-meta">All phases &middot; 10 min morning + post-tennis</div></div>
       <div class="pr-arr">&rsaquo;</div>
-    </div>
+    </button>
   </div>
   <div class="sec-lbl">Equipment</div>
   <div class="eq-wrap">
-    <div class="eq-pill-card">
+    <div class="eq-card">
       <div class="eq-cat">Essential &mdash; buy now</div>
-      <div class="eq-row hot"><strong>FlexBar (green) ~&euro;20</strong> &mdash; Tyler Twist for lateral epicondylitis</div>
-      <div class="eq-row hot"><strong>Resistance bands</strong> &mdash; light + medium, 3&ndash;4 bands</div>
-      <div class="eq-row"><strong>Pull-up bar</strong> &mdash; doorframe, for dead hangs</div>
+      <div class="eq-row hot"><strong>FlexBar green ~&euro;20</strong> &mdash; Tyler Twist for lateral epicondylitis</div>
+      <div class="eq-row hot"><strong>Resistance bands</strong> &mdash; light + medium set</div>
+      <div class="eq-row"><strong>Pull-up bar</strong> &mdash; for dead hangs</div>
     </div>
-    <div class="eq-pill-card">
+    <div class="eq-card">
       <div class="eq-cat">Home gym</div>
       <div class="eq-row"><strong>Dumbbells</strong> &mdash; light to moderate range</div>
-      <div class="eq-row"><strong>Medicine ball</strong> &mdash; 2&ndash;3 kg for Phase 3</div>
-      <div class="eq-row"><strong>EZ bar + plates</strong></div>
-    </div>
-    <div class="eq-pill-card">
-      <div class="eq-cat">Optional extras</div>
-      <div class="eq-row" style="border:none;padding-bottom:0;">Resistance bands &middot; Kettlebells &middot; Hex dumbbells</div>
+      <div class="eq-row"><strong>Kettlebells</strong> &mdash; one or two sizes</div>
+      <div class="eq-row"><strong>Medicine ball</strong> &mdash; 2&ndash;3 kg</div>
+      <div class="eq-row"><strong>EZ bar</strong> &mdash; for reverse curls</div>
     </div>
   </div>
-
-  <div style="margin:0 16px 8px;padding:16px 18px;background:var(--navy2);border:1px solid var(--border);border-radius:20px;display:flex;align-items:center;justify-content:space-between;">
-    <div>
-      <div style="font-size:9px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Exercise database</div>
-      <div style="font-size:14px;font-weight:700;color:var(--text);">Overtime Athletes</div>
-      <div style="font-size:11px;color:var(--sub);margin-top:2px;">movements.overtimeathletes.com</div>
-    </div>
-    <a href="https://movements.overtimeathletes.com/" target="_blank" rel="noopener"
-       onclick="event.stopPropagation()"
-       style="display:flex;align-items:center;gap:6px;background:var(--navy3);border:1px solid var(--border2);border-radius:99px;padding:8px 14px;text-decoration:none;font-size:12px;font-weight:700;color:var(--accent);letter-spacing:0.02em;">
-      Visit &#8599;
-    </a>
+  <div class="ota-credit">
+    <div><div class="ota-tag">Exercise database</div><div class="ota-name">Overtime Athletes</div><div class="ota-url">movements.overtimeathletes.com</div></div>
+    <a class="ota-btn" href="https://movements.overtimeathletes.com/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Visit &nearr;</a>
   </div>
-  <div class="spacer"></div>
 </div>
 
-<!-- PAGE 1 PHASE 1 -->
+<!-- ═══ PAGE 1: PHASE 1 ═══ -->
 <div class="page p1" id="pg1">
   <div class="ph-header">
     <div class="ph-eyebrow" style="color:var(--c1)">Phase 1 &middot; Weeks 1&ndash;4</div>
     <div class="ph-title">Unload &amp; Restore</div>
-    <div class="ph-pills">
-      <span class="ph-pill">3&times;/week</span>
-      <span class="ph-pill">20&ndash;30 min</span>
-      <span class="ph-pill">Pain &le; 3/10</span>
-      <span class="ph-pill">No serve</span>
-    </div>
+    <div class="ph-pills"><span class="ph-pill">3&times;/week</span><span class="ph-pill">20&ndash;30 min</span><span class="ph-pill">Pain &le; 3/10</span><span class="ph-pill">No serve</span></div>
   </div>
   <div class="ph-body">
-    <div class="tip tip-amber"><strong>FlexBar Tyler Twist &mdash; daily from day 1.</strong> 3 &times; 15 eccentric wrist extensions. Gold-standard intervention for lateral epicondylitis. Green TheraBand ~&euro;20.</div>
+    <div class="tip tip-amber"><strong>FlexBar Tyler Twist &mdash; daily from day 1.</strong> 3&times;15 eccentric wrist extensions. Gold-standard for lateral epicondylitis. Green TheraBand ~&euro;20.</div>
 
-    <div>
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Warm-Up &middot; 8 min</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Band Dislocations</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 10</span><span class="ex-tag">Slow & controlled</span><span class="ex-tag">No pain</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Full shoulder arc warm-up. Primes the RC through complete range before any load. Use a wide grip to avoid pain through mid-range.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/band-shoulder-dislocations/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Band Pull Aparts</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 15</span><span class="ex-tag">Light band</span><span class="ex-tag">Scap retraction at end</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Rhomboids, rear delt, mid-trap activation. Counteracts the anterior dominance that accumulates from daily serving and groundstrokes.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/banded-pull-aparts/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Wall Slides</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 10</span><span class="ex-tag">Forearms on wall</span><span class="ex-tag">Slide slowly</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Serratus anterior activation. Keeps scapula flush against ribcage during overhead movement. Critical for impingement prevention.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/wall-scap-mobility/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Band Dislocations</div><div class="ex-tags"><span class="ex-tag main">2 &times; 10</span><span class="ex-tag">Slow &amp; controlled</span><span class="ex-tag">No pain</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Full shoulder arc warm-up. Primes the rotator cuff through complete range before any load. Use a wide grip to avoid pain through mid-range.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/band-shoulder-dislocations/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Band Pull Aparts</div><div class="ex-tags"><span class="ex-tag main">2 &times; 15</span><span class="ex-tag">Light band</span><span class="ex-tag">Scap retraction at end</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Rhomboids, rear delt, mid-trap activation. Counteracts the anterior dominance that accumulates from daily serving and groundstrokes.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/banded-pull-aparts/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Wall Slides</div><div class="ex-tags"><span class="ex-tag main">2 &times; 10</span><span class="ex-tag">Forearms on wall</span><span class="ex-tag">Slide slowly</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Serratus anterior activation &mdash; keeps the scapula flush against the ribcage during overhead movement. Critical for impingement prevention.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/wall-scap-mobility/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block A &middot; Rotator Cuff</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Band External Rotation</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 15</span><span class="ex-tag">2s hold end range</span><span class="ex-tag">60s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Elbow pinned to side. Strengthens infraspinatus and teres minor — the primary serve decelerators. IR/ER imbalance is the root of your front shoulder pain.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/band-external-rotation/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">External Rotation Holds</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 5</span><span class="ex-tag">8s isometric hold</span><span class="ex-tag">75s rest</span><span class="ex-tag">90° abduction</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Isometrics = maximum neural drive, zero tendon compression. The safest tendon entry point for 6–7/10 pain. Light DB only.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/external-rotation-holds/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Prone Blackburns</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 12</span><span class="ex-tag">3s up · 2s down</span><span class="ex-tag">60s rest</span><span class="ex-tag">No weight</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Posterior RC + lower trap simultaneously. Prone position offloads the spine while training the chain compromised by your back contracture.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/blackburns/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Prone ITYs</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 10</span><span class="ex-tag">2s hold at top</span><span class="ex-tag">60s rest</span><span class="ex-tag">Bodyweight</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Three positions loading the full scapular force couple. The Y position trains the serve follow-through arm path. No plates to start.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/prone-itys/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Band External Rotation</div><div class="ex-tags"><span class="ex-tag main">3 &times; 15</span><span class="ex-tag">2s hold end range</span><span class="ex-tag">60s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Elbow pinned to side. Strengthens infraspinatus and teres minor &mdash; the primary serve decelerators. IR/ER imbalance is the root of your front shoulder pain.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/band-external-rotation/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">External Rotation Holds</div><div class="ex-tags"><span class="ex-tag main">3 &times; 5</span><span class="ex-tag">8s isometric hold</span><span class="ex-tag">75s rest</span><span class="ex-tag">90&deg; abduction</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Isometrics = maximum neural drive, zero tendon compression. The safest tendon entry point for 6&ndash;7/10 pain. Light DB at 90&deg; abduction.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/external-rotation-holds/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Prone Blackburns</div><div class="ex-tags"><span class="ex-tag main">3 &times; 12</span><span class="ex-tag">3s up &middot; 2s down</span><span class="ex-tag">60s rest</span><span class="ex-tag">No weight</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Posterior RC + lower trap simultaneously. Prone position offloads the spine while training the chain compromised by your back contracture.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/blackburns/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Prone ITYs</div><div class="ex-tags"><span class="ex-tag main">3 &times; 10</span><span class="ex-tag">2s hold at top</span><span class="ex-tag">60s rest</span><span class="ex-tag">Bodyweight</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Three positions loading the full scapular force couple. The Y position trains the serve follow-through arm path. No plates to start.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/prone-itys/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block B &middot; Elbow Tendon</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Hammer Curls — Slow Eccentric</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 10</span><span class="ex-tag">2s up · 4s down</span><span class="ex-tag">90s rest</span><span class="ex-tag">Very light DB</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">4-second eccentric targets brachioradialis — the key lateral elbow stabiliser. The slow lowering phase is the therapy, not the lift.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/hammer-curls/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Inverted Curls</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 12</span><span class="ex-tag">2s up · 3s down</span><span class="ex-tag">90s rest</span><span class="ex-tag">Light weight</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Pronated grip directly loads the ECRB tendon — the lateral epicondylitis site. Wrist extensors work isometrically throughout every rep.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/inverted-curls/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Dead Hangs</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 20–30s</span><span class="ex-tag">Passive hang</span><span class="ex-tag">60s rest</span><span class="ex-tag">Both hands</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Decompresses the elbow joint, isometrically loads flexor tendons, elongates the shoulder complex. Also directly benefits your back contracture.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/dead-hangs/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Hammer Curls &mdash; Slow Eccentric</div><div class="ex-tags"><span class="ex-tag main">3 &times; 10</span><span class="ex-tag">2s up &middot; 4s down</span><span class="ex-tag">90s rest</span><span class="ex-tag">Very light DB</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">4-second eccentric targets brachioradialis &mdash; the key lateral elbow stabiliser. The slow lowering phase is the therapy, not the lift.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/hammer-curls/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Inverted Curls</div><div class="ex-tags"><span class="ex-tag main">3 &times; 12</span><span class="ex-tag">2s up &middot; 3s down</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Pronated grip directly loads the ECRB tendon &mdash; the lateral epicondylitis site. Wrist extensors work isometrically throughout every rep.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/inverted-curls/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Dead Hangs</div><div class="ex-tags"><span class="ex-tag main">3 &times; 20&ndash;30s</span><span class="ex-tag">Passive hang</span><span class="ex-tag">60s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Decompresses the elbow joint, isometrically loads flexor tendons, elongates the shoulder complex. Also directly benefits your back contracture.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/dead-hangs/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block C &middot; Mobility</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Bench Lat Mobility</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 45s each</span><span class="ex-tag">Breathe out to deepen</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Priority 1 for your back contracture. Opens thoracic spine and lat simultaneously from the top of the chain. Most important stretch in the program.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/bench-lat-mobility/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Pec Minor Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 40s each</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Tight pec minor causes anterior scapular tipping which leads directly to impingement. Non-negotiable with front shoulder pain at this severity.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/pec-minor-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Sleeper IR/ER Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 40s each direction</span><span class="ex-tag">Gentle only</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Posterior capsule tightness is the primary driver of back-of-shoulder pain (GIRD). Very gentle pressure only — never force this stretch.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/sleeper-internal-external-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Band Lat Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 40s each</span><span class="ex-tag">Rotate torso for QL bias</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Directly targets back contracture. The lat runs from humerus to pelvis — tightness restricts both shoulder mobility and back posture.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/banded-lat-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div class="prog-box"><div class="pb-label" style="color:var(--c1)">Phase 1 &rarr; Phase 2 criteria</div><div class="pb-text">Resting pain &le; 2/10 &middot; all sets pain-free at tempo &middot; osteopath clearance. <strong style="color:var(--text)">Minimum 4 weeks</strong> regardless of improvement rate.</div></div>
-    <div class="spacer"></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Bench Lat Mobility</div><div class="ex-tags"><span class="ex-tag main">3 &times; 45s each</span><span class="ex-tag">Breathe out to deepen</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Priority 1 for your back contracture. Opens thoracic spine and lat simultaneously. Most important stretch in the entire program.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/bench-lat-mobility/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Pec Minor Stretch</div><div class="ex-tags"><span class="ex-tag main">3 &times; 40s each</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Tight pec minor causes anterior scapular tipping which leads directly to impingement. Non-negotiable with front shoulder pain at this severity.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/pec-minor-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Sleeper IR/ER Stretch</div><div class="ex-tags"><span class="ex-tag main">2 &times; 40s each direction</span><span class="ex-tag">Gentle only</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Posterior capsule tightness is the primary driver of back-of-shoulder pain (GIRD). Very gentle pressure only &mdash; never force this stretch.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/sleeper-internal-external-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Band Lat Stretch</div><div class="ex-tags"><span class="ex-tag main">3 &times; 40s each</span><span class="ex-tag">Rotate torso for QL bias</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Directly targets back contracture. The lat runs from humerus to pelvis &mdash; tightness restricts both shoulder mobility and back posture.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/banded-lat-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="prog-box">
+      <div class="pb-label" style="color:var(--c1)">Phase 1 &rarr; Phase 2 criteria</div>
+      <div class="pb-text">Resting pain &le; 2/10 &middot; all sets pain-free at tempo &middot; osteopath clearance. <strong style="color:var(--text)">Minimum 4 weeks</strong> regardless of improvement rate.</div>
+    </div>
   </div>
 </div>
 
-<!-- PAGE 2 PHASE 2 -->
+<!-- ═══ PAGE 2: PHASE 2 ═══ -->
 <div class="page p2" id="pg2">
   <div class="ph-header">
     <div class="ph-eyebrow" style="color:var(--c2)">Phase 2 &middot; Weeks 5&ndash;10</div>
     <div class="ph-title">Build &amp; Stabilise</div>
-    <div class="ph-pills">
-      <span class="ph-pill">3&ndash;4&times;/week</span>
-      <span class="ph-pill">35&ndash;45 min</span>
-      <span class="ph-pill">Pain &le; 2/10</span>
-      <span class="ph-pill">Light rally OK</span>
-    </div>
+    <div class="ph-pills"><span class="ph-pill">3&ndash;4&times;/week</span><span class="ph-pill">35&ndash;45 min</span><span class="ph-pill">Pain &le; 2/10</span><span class="ph-pill">Light rally OK</span></div>
   </div>
   <div class="ph-body">
-    <div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block A &middot; Scapular Stability</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Wall Slides with Lift Off</div>
-            <div class="ex-tags"><span class="ex-tag main">4 × 10</span><span class="ex-tag">3s lift hold</span><span class="ex-tag">75s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">The lift-off aggressively recruits serratus anterior — keeps the scapula flat against the ribcage during overhead serving.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/wall-slides-with-lift-off/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Band Facepulls</div>
-            <div class="ex-tags"><span class="ex-tag main">4 × 12</span><span class="ex-tag">2s pause at end</span><span class="ex-tag">75s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Band anchored at face height — no cable machine needed. Targets mid-trap, rear delt, and RC simultaneously. The most complete shoulder health exercise for tennis players.
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/band-facepulls/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">ITYWs</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 10 each</span><span class="ex-tag">Light plates</span><span class="ex-tag">75s rest</span><span class="ex-tag">Prone incline bench</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Loads all four scapular force couples. The W position trains the trophy pose arm position — directly corrects your serve mechanics fault.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/ityws/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Incline Rear Delt Raise + ER</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 12</span><span class="ex-tag">2s up · 3s down</span><span class="ex-tag">75s rest</span><span class="ex-tag">Light DBs</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Posterior deltoid + ER at end range. Trains the serve arm deceleration position under load. Targets the back-of-shoulder pain site directly.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/shoulders/incline-rear-delt-raise-with-external-rotation/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Wall Slides with Lift Off</div><div class="ex-tags"><span class="ex-tag main">4 &times; 10</span><span class="ex-tag">3s lift hold</span><span class="ex-tag">75s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">The lift-off aggressively recruits serratus anterior &mdash; keeps the scapula flat against the ribcage during overhead serving. Most important scapular exercise.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/wall-slides-with-lift-off/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Band Facepulls</div><div class="ex-tags"><span class="ex-tag main">4 &times; 12</span><span class="ex-tag">2s pause at end</span><span class="ex-tag">75s rest</span><span class="ex-tag">Band at face height</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Band anchored at face height &mdash; no cable needed. Mid-trap + rear delt + RC simultaneously. The most complete shoulder health exercise for tennis players.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/band-facepulls/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">ITYWs</div><div class="ex-tags"><span class="ex-tag main">3 &times; 10 each</span><span class="ex-tag">Light plates</span><span class="ex-tag">75s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Loads all four scapular force couples. The W position trains the trophy pose arm position &mdash; directly corrects your elbow-too-high serve fault.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/ityws/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Incline Rear Delt Raise + ER</div><div class="ex-tags"><span class="ex-tag main">3 &times; 12</span><span class="ex-tag">2s up &middot; 3s down</span><span class="ex-tag">75s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Posterior deltoid + ER at end range. Trains the serve arm deceleration position under load. Directly targets the back-of-shoulder pain site.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/shoulders/incline-rear-delt-raise-with-external-rotation/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block B &middot; Pulling Strength</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Inverted Row</div>
-            <div class="ex-tags"><span class="ex-tag main">4 × 10</span><span class="ex-tag">3s eccentric</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Horizontal pull counteracting anterior dominance from every forehand and serve. Adjust foot position to increase difficulty as you progress.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/inverted-rows/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Low Band Single Arm Row</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 12 each</span><span class="ex-tag">2s pull · 3s return</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Band anchored low. Unilateral pull that corrects left-right imbalances common in tennis players. Anti-rotation demand builds core stability relevant to all groundstrokes.
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/low-band-single-arm-row/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">DB Bent Over Row</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 12</span><span class="ex-tag">Controlled tempo</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Dumbbells only. Horizontal pull building the upper back and lat strength that counteracts the anterior dominance from every forehand and serve.
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/db-bent-over-row/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Inverted Row</div><div class="ex-tags"><span class="ex-tag main">4 &times; 10</span><span class="ex-tag">3s eccentric</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Horizontal pull counteracting anterior dominance from every forehand and serve. Adjust foot position to increase difficulty as you progress.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/inverted-rows/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Band Rows</div><div class="ex-tags"><span class="ex-tag main">3 &times; 15 each</span><span class="ex-tag">2s pull &middot; 2s return</span><span class="ex-tag">60s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Band anchored low. Unilateral horizontal pull correcting left-right imbalances common in tennis players. Anti-rotation core demand on every rep.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/band-rows/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">DB Bent Over Row</div><div class="ex-tags"><span class="ex-tag main">3 &times; 12</span><span class="ex-tag">Controlled tempo</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Dumbbells only. Upper back and lat strength directly counteracting the anterior dominance from every forehand and serve.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/db-bent-over-row/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block C &middot; Elbow Loading</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Zottman Curls</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 10</span><span class="ex-tag">2s up supinated</span><span class="ex-tag">4s down pronated</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Eccentrically loads both flexor (medial) and extensor (lateral) tendons simultaneously. The most efficient bilateral elbow rehab exercise.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/zottman-curls/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">EZ Bar Reverse Curls</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 12</span><span class="ex-tag">3s eccentric</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Progressive ECRB + brachioradialis loading. EZ bar reduces wrist deviation stress vs straight bar. Primary lateral elbow builder this phase.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/ez-bar-reverse-curls/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Hex Holds</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 30s each</span><span class="ex-tag">Pinch grip</span><span class="ex-tag">60s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Builds grip endurance protecting forearm tendons across a full match. Pinch grip mimics racket handle demand under fatigue.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/hex-holds/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Reverse Throws (band)</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 12 each</span><span class="ex-tag">Explosive decel</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Trains the serve deceleration arc — follow-through back to trophy. Prepares elbow and shoulder for return to competitive serve load.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/reverse-throws/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div class="prog-box"><div class="pb-label" style="color:var(--c2)">Phase 2 &rarr; Phase 3 criteria</div><div class="pb-text">Pain at rest 0/10 &middot; rallying pain &le; 1/10 &middot; all Phase 2 exercises at full load &middot; osteopath confirms back contracture improving. <strong style="color:var(--text)">Minimum 6 weeks.</strong></div></div>
-    <div class="spacer"></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Zottman Curls</div><div class="ex-tags"><span class="ex-tag main">3 &times; 10</span><span class="ex-tag">2s up supinated</span><span class="ex-tag">4s down pronated</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Curl supinated, lower pronated. Eccentrically loads both flexor (medial) and extensor (lateral) tendons simultaneously. Most efficient bilateral elbow exercise.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/zottman-curls/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">EZ Bar Reverse Curls</div><div class="ex-tags"><span class="ex-tag main">3 &times; 12</span><span class="ex-tag">3s eccentric</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Progressive ECRB + brachioradialis loading. EZ bar reduces wrist deviation stress vs straight bar. Primary lateral elbow strength builder this phase.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/ez-bar-reverse-curls/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Hex Holds</div><div class="ex-tags"><span class="ex-tag main">3 &times; 30s each</span><span class="ex-tag">Pinch grip</span><span class="ex-tag">60s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Builds grip endurance protecting forearm tendons across a full match. Pinch grip mimics racket handle demand under progressive fatigue.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/hex-holds/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Reverse Throws (band)</div><div class="ex-tags"><span class="ex-tag main">3 &times; 12 each</span><span class="ex-tag">Explosive decel</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Trains the serve deceleration arc &mdash; from full follow-through back to trophy. Prepares elbow and shoulder for competitive serve load.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/reverse-throws/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="prog-box">
+      <div class="pb-label" style="color:var(--c2)">Phase 2 &rarr; Phase 3 criteria</div>
+      <div class="pb-text">Pain at rest 0/10 &middot; rallying pain &le; 1/10 &middot; all Phase 2 exercises at full load &middot; osteopath confirms back contracture improving. <strong style="color:var(--text)">Minimum 6 weeks.</strong></div>
+    </div>
   </div>
 </div>
 
-<!-- PAGE 3 PHASE 3 -->
+<!-- ═══ PAGE 3: PHASE 3 ═══ -->
 <div class="page p3" id="pg3">
   <div class="ph-header">
     <div class="ph-eyebrow" style="color:var(--c3)">Phase 3 &middot; Weeks 11&ndash;16</div>
     <div class="ph-title">Load &amp; Perform</div>
-    <div class="ph-pills">
-      <span class="ph-pill">4&times;/week</span>
-      <span class="ph-pill">45&ndash;55 min</span>
-      <span class="ph-pill">Pain 0/10 only</span>
-      <span class="ph-pill">Return to serve</span>
-    </div>
+    <div class="ph-pills"><span class="ph-pill">4&times;/week</span><span class="ph-pill">45&ndash;55 min</span><span class="ph-pill">Pain 0/10 only</span><span class="ph-pill">Return to serve</span></div>
   </div>
   <div class="ph-body">
-    <div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block A &middot; Shoulder Performance</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Scarecrows</div>
-            <div class="ex-tags"><span class="ex-tag main">4 × 12</span><span class="ex-tag">2s at ER end range</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">ER at 90° abduction — the exact position your elbow needs in the trophy pose. Directly corrects the elbow-too-high serve mechanics fault.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/shoulders/scarecrows/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Cuban Press</div>
-            <div class="ex-tags"><span class="ex-tag main">4 × 10</span><span class="ex-tag">Full arc · controlled</span><span class="ex-tag">90s rest</span><span class="ex-tag">Light-moderate DBs</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Most complete overhead RC movement — upright row + ER + overhead press in sequence. Trains the full serve wind-up arc under progressive load.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/cuban-press/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Lateral Raise</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 15</span><span class="ex-tag">2s up · 3s down</span><span class="ex-tag">90s rest</span><span class="ex-tag">Thumb neutral</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Supraspinatus + deltoid through 0–90°. Thumb neutral reduces impingement risk through the mid-range arc. Increase load weekly.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/shoulders/lateral-raise-2/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">ITYs (loaded)</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 10 each</span><span class="ex-tag">Small plates</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Progression from Phase 1 bodyweight ITYs. Loaded for maximal lower trap and serratus strength. Critical for pain-free overhead at full load.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/shoulders/itys/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Scarecrows</div><div class="ex-tags"><span class="ex-tag main">4 &times; 12</span><span class="ex-tag">2s at ER end range</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">ER at 90&deg; abduction &mdash; the exact position your elbow needs in the trophy pose. Directly corrects the elbow-too-high serve mechanics fault.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/shoulders/scarecrows/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Cuban Press</div><div class="ex-tags"><span class="ex-tag main">4 &times; 10</span><span class="ex-tag">Full arc &middot; controlled</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Most complete overhead RC movement &mdash; upright row + ER + overhead press in sequence. Trains the full serve wind-up arc under progressive load.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/cuban-press/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Lateral Raise</div><div class="ex-tags"><span class="ex-tag main">3 &times; 15</span><span class="ex-tag">2s up &middot; 3s down</span><span class="ex-tag">Thumb neutral</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Supraspinatus + deltoid through 0&ndash;90&deg;. Thumb neutral reduces impingement risk through the mid-range arc. Increase load weekly as pain allows.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/shoulders/lateral-raise-2/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">ITYs (loaded)</div><div class="ex-tags"><span class="ex-tag main">3 &times; 10 each</span><span class="ex-tag">Small plates</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Progression from Phase 1 bodyweight ITYs. Loaded for maximal lower trap and serratus strength &mdash; critical for pain-free overhead at full competitive load.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/shoulders/itys/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Block B &middot; Pulling Performance</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">High Band Single Arm Row</div>
-            <div class="ex-tags"><span class="ex-tag main">4 × 10 each</span><span class="ex-tag">Rotational finish</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Band anchored high. Diagonal pull pattern that mimics the serve deceleration arc — builds sport-specific posterior chain strength without any cable machine.
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/high-band-single-arm-row/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Single Arm DB Row</div>
-            <div class="ex-tags"><span class="ex-tag main">4 × 10 each</span><span class="ex-tag">Rotational finish</span><span class="ex-tag">90s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Band anchored high. Diagonal pull pattern that mimics the serve deceleration arc — builds sport-specific posterior chain strength without any cable machine.
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/one-arm-row/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Hex Carries</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 30m each</span><span class="ex-tag">Pinch grip</span><span class="ex-tag">60s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Forearm endurance under cumulative fatigue — simulates the sustained grip demand of a 3-set match. Progressed from Phase 2 hex holds.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/hex-carries/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Dead Hangs (loaded)</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 45s</span><span class="ex-tag">Weighted vest option</span><span class="ex-tag">60s rest</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Now a durability tool. Trains grip, forearm, and elbow under sustained tension while continuing to benefit the thoracic chain.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/dead-hangs/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">KB Corkscrew Row</div><div class="ex-tags"><span class="ex-tag main">4 &times; 10 each</span><span class="ex-tag">Rotational finish</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Kettlebell. Rotation mimics forehand follow-through &mdash; builds sport-specific pulling power and protects the elbow from repetitive unidirectional stress.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/kettlebell-corkscrew-row/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Single Arm DB Row</div><div class="ex-tags"><span class="ex-tag main">4 &times; 10 each</span><span class="ex-tag">Heavy &middot; full retraction</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Heavy dumbbell. Lat strength is foundational for serve power &mdash; the lat is the primary internal rotator driving racket acceleration.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/pull/horizontal/one-arm-row/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head"><span class="blk-lbl">Block C &middot; Elbow Durability</span><span class="blk-line"></span></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Incline Hammer Curls</div><div class="ex-tags"><span class="ex-tag main">4 &times; 10</span><span class="ex-tag">3s eccentric</span><span class="ex-tag">90s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Incline increases brachialis stretch at the bottom &mdash; loading at long muscle length is the most adaptive stimulus for permanent tendon remodelling.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/incline-hammer-curls/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Hex Carries</div><div class="ex-tags"><span class="ex-tag main">3 &times; 30m each</span><span class="ex-tag">Pinch grip</span><span class="ex-tag">60s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Forearm endurance under cumulative fatigue &mdash; simulates the sustained grip demand of a 3-set match. Progressed from Phase 2 Hex Holds.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/hex-carries/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Dead Hangs (loaded)</div><div class="ex-tags"><span class="ex-tag main">3 &times; 45s</span><span class="ex-tag">Weighted vest option</span><span class="ex-tag">60s rest</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Now a durability tool. Trains grip, forearm, and elbow under sustained tension while continuing to benefit the thoracic chain and back contracture.</div><a class="ex-link" href="https://movements.overtimeathletes.com/strength/upper/arms-2/flexion/dead-hangs/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
     <div class="serve-box">
       <div class="sb-label">Return-to-serve protocol (Week 11)</div>
       <div class="sb-note">Stop immediately if pain exceeds 1/10. Return to Phase 2 mobility for 48h before retrying.</div>
@@ -866,213 +410,142 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);font-size:15px
         <div class="sg-cell"><div class="sg-wk">Week 14+</div><div class="sg-d">Full load &middot; monitor weekly</div></div>
       </div>
     </div>
-    <div class="spacer"></div>
   </div>
 </div>
 
-<!-- PAGE 4 DAILY -->
+<!-- ═══ PAGE 4: DAILY ═══ -->
 <div class="page pd" id="pg4">
   <div class="ph-header">
     <div class="ph-eyebrow" style="color:var(--cd)">Daily &middot; All Phases</div>
     <div class="ph-title">Maintenance Routine</div>
-    <div class="ph-pills">
-      <span class="ph-pill">Every day</span>
-      <span class="ph-pill">10 min morning</span>
-      <span class="ph-pill">15 min post-tennis</span>
-    </div>
+    <div class="ph-pills"><span class="ph-pill">Every day</span><span class="ph-pill">10 min morning</span><span class="ph-pill">15 min post-tennis</span></div>
   </div>
   <div class="ph-body">
     <div class="tip tip-blue">Consistency compounds. 10 minutes every morning for 16 weeks creates structural change in thoracic mobility and posterior shoulder health that no single workout can replicate.</div>
-    <div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Morning &middot; before getting up</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Band Pull Aparts</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 20</span><span class="ex-tag">Light band</span><span class="ex-tag">Every day</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">2-minute daily ritual. Activates the posterior chain before the day loads the anterior chain through sitting, studying, and playing.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/banded-pull-aparts/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Cactus Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 40s</span><span class="ex-tag">Thoracic extension</span><span class="ex-tag">Every day</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Opens pec and thoracic spine. Counteracts flexion posture from sleeping and studying. Directly relevant to your back contracture recovery.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/cactus-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Lat Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 45s each</span><span class="ex-tag">Even on rest days</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Most important stretch for back contracture. Lat runs humerus to pelvis — tightness restricts both shoulder mobility and back posture.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/lat-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Diagonal Band Pull Aparts</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 15 each direction</span><span class="ex-tag">Pre-tennis essential</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Mirrors serve deceleration arc — primes the posterior shoulder before you hit a single ball. Do before every practice session.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/diagonal-band-pull-aparts/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>    </div>
-    <div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Band Pull Aparts</div><div class="ex-tags"><span class="ex-tag main">2 &times; 20</span><span class="ex-tag">Light band</span><span class="ex-tag">Every day</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">2-minute daily ritual. Activates the posterior chain before the day loads the anterior chain through sitting, studying, and playing.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/banded-pull-aparts/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Cactus Stretch</div><div class="ex-tags"><span class="ex-tag main">3 &times; 40s</span><span class="ex-tag">Thoracic extension</span><span class="ex-tag">Every day</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Opens pec and thoracic spine. Counteracts flexion posture from sleeping and studying. Directly relevant to your back contracture recovery.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/cactus-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Lat Stretch</div><div class="ex-tags"><span class="ex-tag main">2 &times; 45s each</span><span class="ex-tag">Even on rest days</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Most important stretch for back contracture. Lat runs humerus to pelvis &mdash; tightness restricts both shoulder mobility and back posture simultaneously.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/lat-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Diagonal Band Pull Aparts</div><div class="ex-tags"><span class="ex-tag main">2 &times; 15 each direction</span><span class="ex-tag">Pre-tennis essential</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Mirrors serve deceleration arc &mdash; primes the posterior shoulder before you hit a single ball. Do before every practice session without exception.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/correctives/upper/diagonal-band-pull-aparts/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+    </div>
+
+    <div class="blk">
       <div class="blk-head"><span class="blk-lbl">Post-Tennis &middot; within 30 min</span><span class="blk-line"></span></div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Overhead Band Lat Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">3 × 45s each</span><span class="ex-tag">After serving</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Decompresses lat tension accumulated through internal rotation during serve acceleration. Do immediately after every session involving serving.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/overhead-band-lat-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Sleeper Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 40s each</span><span class="ex-tag">Post-match essential</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Reduces posterior capsule tightening from repetitive serve load. Prevents cumulative GIRD building over a competition season.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/sleeper-internal-external-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Bicep Stretch</div>
-            <div class="ex-tags"><span class="ex-tag main">2 × 40s each arm</span><span class="ex-tag">Post-match</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Releases distal bicep tendon compressed against the radial head during serve pronation. Relevant to both front shoulder and medial elbow.</div>
-          <a class="ex-link" onclick="event.stopPropagation()" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/bicep-stretch/" target="_blank" rel="noopener"><span class="el-label">View on OTA Database</span><span class="el-arr">&#8599;</span></a>
-        </div>
-      </div>
-      <div class="ex" onclick="tog(this)">
-        <div class="ex-top">
-          <div class="ex-left">
-            <div class="ex-name">Heat Application</div>
-            <div class="ex-tags"><span class="ex-tag main">15–20 min</span><span class="ex-tag">Not ice</span><span class="ex-tag">Shoulder + upper back</span></div>
-          </div>
-          <div class="ex-chev">&#8964;</div>
-        </div>
-        <div class="ex-expand">
-          <div class="ex-why">Given your back contracture, heat is preferred. Promotes tissue extensibility in chronically tight structures. Apply after stretching, not before.</div>
-          
-        </div>
-      </div>    </div>
-    <div class="spacer"></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Overhead Band Lat Stretch</div><div class="ex-tags"><span class="ex-tag main">3 &times; 45s each</span><span class="ex-tag">After serving</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Decompresses lat tension accumulated through internal rotation during serve acceleration. Do immediately after every session involving serving.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/overhead-band-lat-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Sleeper Stretch</div><div class="ex-tags"><span class="ex-tag main">2 &times; 40s each</span><span class="ex-tag">Post-match essential</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Reduces posterior capsule tightening from repetitive serve load. Prevents cumulative GIRD building over a competition season.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/sleeper-internal-external-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Bicep Stretch</div><div class="ex-tags"><span class="ex-tag main">2 &times; 40s each arm</span><span class="ex-tag">Post-match</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Releases distal bicep tendon compressed against the radial head during serve pronation. Relevant to both front shoulder and medial elbow symptoms.</div><a class="ex-link" href="https://movements.overtimeathletes.com/stretches-activation-2/upper/bicep-stretch/" target="_blank" rel="noopener" onclick="event.stopPropagation()"><span class="el-txt">View on OTA Database</span><span class="el-arr">&#8599;</span></a></div></div>
+      <div class="ex"><div class="ex-top"><div class="ex-left"><div class="ex-name">Heat Application</div><div class="ex-tags"><span class="ex-tag main">15&ndash;20 min</span><span class="ex-tag">Not ice</span><span class="ex-tag">Shoulder + upper back</span></div></div><div class="ex-chev">&#8964;</div></div><div class="ex-body"><div class="ex-why">Given your back contracture, heat is preferred over ice. Promotes tissue extensibility in chronically tight structures. Apply after stretching, not before.</div></div></div>
+    </div>
+
   </div>
 </div>
 
+</div><!-- end swipe-track -->
+</div><!-- end swipe-root -->
 
-</div></div><!-- end swipe -->
-
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <div class="bn-item active" data-i="0" onclick="go(0)"><div class="bn-pip"></div><div class="bn-label">Home</div></div>
-  <div class="bn-item" data-i="1" onclick="go(1)"><div class="bn-pip"></div><div class="bn-label">Phase 1</div></div>
-  <div class="bn-item" data-i="2" onclick="go(2)"><div class="bn-pip"></div><div class="bn-label">Phase 2</div></div>
-  <div class="bn-item" data-i="3" onclick="go(3)"><div class="bn-pip"></div><div class="bn-label">Phase 3</div></div>
-  <div class="bn-item" data-i="4" onclick="go(4)"><div class="bn-pip"></div><div class="bn-label">Daily</div></div>
+  <button class="bn active" id="bn0" onclick="go(0)"><div class="bn-pip"></div><div class="bn-lbl">Home</div></button>
+  <button class="bn" id="bn1" onclick="go(1)"><div class="bn-pip"></div><div class="bn-lbl">Phase 1</div></button>
+  <button class="bn" id="bn2" onclick="go(2)"><div class="bn-pip"></div><div class="bn-lbl">Phase 2</div></button>
+  <button class="bn" id="bn3" onclick="go(3)"><div class="bn-pip"></div><div class="bn-lbl">Phase 3</div></button>
+  <button class="bn" id="bn4" onclick="go(4)"><div class="bn-pip"></div><div class="bn-lbl">Daily</div></button>
 </nav>
 
 <script>
-const SR=document.getElementById('SR'),ST=document.getElementById('ST');
-const TOTAL=5;
-let cur=0,sx=0,sy=0,drag=false;
+var cur = 0;
+var TOTAL = 5;
+var dragging = false;
+var startX = 0;
+var startY = 0;
+var ST, SR;
 
-function go(n,anim=true){
-  if(n<0||n>=TOTAL)return;
-  cur=n;
-  ST.style.transition=anim?'transform 0.38s cubic-bezier(0.4,0,0.2,1)':'none';
-  ST.style.transform=`translateX(${-n*100}%)`;
-  setTimeout(()=>{
-    const pg=document.getElementById('pg'+n);
-    if(pg) pg.scrollTop=0;
-  },10);
-  document.querySelectorAll('.bn-item').forEach((el,i)=>el.classList.toggle('active',i===n));
-  const back=document.getElementById('tbBack'),logo=document.getElementById('tbLogo');
-  if(n===0){
-    back.classList.remove('show');
-    logo.style.removeProperty('display');
+function go(n) {
+  if (n < 0 || n >= TOTAL) return;
+  if (!ST) ST = document.getElementById('ST');
+  cur = n;
+  ST.style.transition = 'transform 0.38s cubic-bezier(0.4,0,0.2,1)';
+  ST.style.transform = 'translateX(' + (-n * 100) + '%)';
+  setTimeout(function() {
+    var pg = document.getElementById('pg' + n);
+    if (pg) pg.scrollTop = 0;
+  }, 10);
+  for (var i = 0; i < TOTAL; i++) {
+    var b = document.getElementById('bn' + i);
+    if (b) b.className = (i === n) ? 'bn active' : 'bn';
+  }
+  var back = document.getElementById('tbBack');
+  var logo = document.getElementById('tbLogo');
+  if (n === 0) {
+    back.style.display = 'none';
+    logo.style.display = '';
   } else {
-    back.classList.add('show');
-    logo.style.display='none';
+    back.style.display = 'flex';
+    logo.style.display = 'none';
   }
 }
-function goHome(){go(0);}
 
-// swipe
-SR.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;drag=true;ST.style.transition='none';},{passive:true});
-SR.addEventListener('touchmove',e=>{
-  if(!drag)return;
-  const dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;
-  // If more vertical than horizontal, cancel swipe (allow page scroll)
-  if(Math.abs(dy)>Math.abs(dx)+5){drag=false;return;}
-  // Only prevent default if clearly horizontal
-  const pct=(-cur*SR.offsetWidth+dx)/SR.offsetWidth*100;
-  ST.style.transform=`translateX(${pct}%)`;
-},{passive:true});
-SR.addEventListener('touchend',e=>{
-  if(!drag)return;drag=false;
-  const dx=e.changedTouches[0].clientX-sx;
-  const dy=e.changedTouches[0].clientY-sy;
-  // Only swipe if clearly horizontal gesture (not a scroll)
-  if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>60){
-    if(dx<0&&cur<TOTAL-1)go(cur+1);
-    else if(dx>0&&cur>0)go(cur-1);
-    else go(cur);
-  } else {
-    go(cur); // snap back
+function togEx(card) {
+  var isOpen = card.classList.contains('open');
+  var siblings = card.parentElement.querySelectorAll('.ex');
+  for (var i = 0; i < siblings.length; i++) {
+    siblings[i].classList.remove('open');
   }
-},{passive:true});
-
-// card toggle
-function tog(card){
-  const open=card.classList.contains('open');
-  // Close all siblings in same block
-  const parent=card.closest('div[class=""]')||card.parentElement;
-  parent.querySelectorAll('.ex').forEach(c=>c.classList.remove('open'));
-  if(!open){
+  if (!isOpen) {
     card.classList.add('open');
-    // Scroll into view after CSS expand animation
-    setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),120);
+    setTimeout(function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
   }
 }
 
-// progress
-window.addEventListener('load',()=>setTimeout(()=>{document.getElementById('pf').style.width='6.25%';},500));
+// iOS Safari: ensure all .ex cards fire click reliably
+document.addEventListener('DOMContentLoaded', function() {
+  var cards = document.querySelectorAll('.ex');
+  for (var i = 0; i < cards.length; i++) {
+    (function(card) {
+      card.addEventListener('click', function(e) {
+        // Don't toggle if tap was on the OTA link
+        if (e.target.closest && e.target.closest('.ex-link')) return;
+        togEx(card);
+      });
+    })(cards[i]);
+  }
+});
+
+(function() {
+  SR = document.getElementById('SR');
+  ST = document.getElementById('ST');
+  if (!SR || !ST) return;
+  SR.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    dragging = true;
+    ST.style.transition = 'none';
+  }, { passive: true });
+  SR.addEventListener('touchmove', function(e) {
+    if (!dragging) return;
+    var dx = e.touches[0].clientX - startX;
+    var dy = e.touches[0].clientY - startY;
+    if (Math.abs(dy) > Math.abs(dx) + 8) { dragging = false; return; }
+    var pct = (-cur * SR.offsetWidth + dx) / SR.offsetWidth * 100;
+    ST.style.transform = 'translateX(' + pct + '%)';
+  }, { passive: true });
+  SR.addEventListener('touchend', function(e) {
+    if (!dragging) return;
+    dragging = false;
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 55) {
+      if (dx < 0 && cur < TOTAL - 1) go(cur + 1);
+      else if (dx > 0 && cur > 0) go(cur - 1);
+      else go(cur);
+    } else {
+      go(cur);
+    }
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
